@@ -15,26 +15,27 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name',255)->nullable();
+            $table->string('price',255)->nullable();
+            $table->string('article',255)->nullable();
+            $table->integer('category_id')->nullable();
+            $table->integer('material_id')->nullable();
+            $table->integer('country_id')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
-
-            $table->string('name',255);
-            $table->string('price',255);
-            $table->string('article',255);
-            $table->string('weight',255);
-            $table->integer('category_id');
-            $table->integer('material_id');
-            $table->integer('country_id');
-
+            
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+
             $table->foreign('material_id')
                 ->references('id')
                 ->on('materials')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+                
             $table->foreign('country_id')
                 ->references('id')
                 ->on('countries')

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductSizesTable extends Migration
+class CreateCartProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,38 @@ class CreateProductSizesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_sizes', function (Blueprint $table) {
+        Schema::create('cart_product', function (Blueprint $table) {
             $table->id();
+            $table->integer('cart_id');
             $table->integer('product_id');
+            $table->integer('color_id');
+            $table->integer('count');
+            $table->text('angraving');
+            $table->integer('is_gift');
             $table->integer('size_id');
             $table->timestamps();
+
+            $table->foreign('cart_id')
+                ->references('id')
+                ->on('cart')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            
             $table->foreign('size_id')
                 ->references('id')
                 ->on('sizes')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('color_id')
+                ->references('id')
+                ->on('colors')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -39,6 +57,6 @@ class CreateProductSizesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_sizes');
+        Schema::dropIfExists('cart_product');
     }
 }

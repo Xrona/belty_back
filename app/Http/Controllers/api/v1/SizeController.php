@@ -6,7 +6,7 @@ namespace App\Http\Controllers\api\v1;
 
 use Illuminate\Http\JsonResponse;
 
-class CategoryController extends ResponseController
+class SizeController extends ResponseController
 {
   
 }

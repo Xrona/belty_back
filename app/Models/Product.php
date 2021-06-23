@@ -19,6 +19,10 @@ class Product extends Model
         'name',
         'price',
         'article',
+        'category_id',
+        'material_id',
+        'country_id',
+        'status',
     ];
 
     protected $guarded = [

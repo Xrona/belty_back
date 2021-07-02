@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Backend\SiteController;
+use App\Http\Controllers\Backend\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('admin.')
@@ -14,4 +16,8 @@ Route::name('admin.')
 
         Route::get('/settings', [SiteController::class, 'settings'])
             ->name('settings');
+        
+        Route::resource('/user', UserController::class);
+
+        Route::resource('/products', ProductController::class);
     });

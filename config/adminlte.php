@@ -241,6 +241,11 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],
+        [
+            'text'        => 'products',
+            'url'         => '/products',
+            'icon'        => 'fas fa-file',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

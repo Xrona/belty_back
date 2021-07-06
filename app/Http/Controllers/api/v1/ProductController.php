@@ -14,22 +14,22 @@ class ProductController extends ResponseController
 {
     public function index(): JsonResponse
     {
-        $products = Category::find(1)->products;        
+        $products = Product::all();
 
         return $this->sendResponse($products, 'products');
     }
-    
+
 
     public function store(ProductsRequest $request): JsonResponse
     {
         $requestData = $request->validated();
 
         $product =  new Product($requestData);
-        
+
         return $this->sendResponse($product->saveOrFail(), 'added');
     }
 
-    public function show($id) 
+    public function show($id)
     {
         return $this->sendReposne();
     }

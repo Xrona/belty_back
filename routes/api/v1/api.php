@@ -15,11 +15,8 @@ use App\Http\Controllers\api\v1\ProductController;
 |
 */
 
-Route::middleware('auth:api')
+Route::middleware('api')
     ->name('api.v1.')
-    ->group(function() {
-        
+    ->group(function () {
+        Route::resource('/products', ProductController::class);
     });
-
-Route::get('/products', [ProductController::class, 'index']);
-Route::post('/products', [ProductController::class, 'store']);

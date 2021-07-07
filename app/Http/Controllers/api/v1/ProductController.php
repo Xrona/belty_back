@@ -7,6 +7,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\ProductsRequest;
+use App\Http\Resources\ProductListResource;
 use Illuminate\Http\JsonResponse;
 
 
@@ -14,9 +15,9 @@ class ProductController extends ResponseController
 {
     public function index(): JsonResponse
     {
-        $products = Product::all();
+        $builder = Product::select('products.*');
 
-        return $this->sendResponse($products, 'products');
+        return $this->sendResponse(new ProductListResource($builder), 'products');
     }
 
 

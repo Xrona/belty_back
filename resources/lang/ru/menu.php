@@ -2,4 +2,5 @@
 
 return [
   'products' => 'Товары',
+  'categories' => 'Категории',
 ];

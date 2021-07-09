@@ -15,10 +15,6 @@ class CategoriesRequest extends FormRequest
   {
     return [
       'name' => 'required|string',
-      'id' => [
-        'required',
-        Rule::exists((new Product)->getTable(), 'category_id'),
-      ],
       ];
   }
 }

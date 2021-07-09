@@ -21,7 +21,7 @@ class CategoryController extends Controller
   {
     $category = Category::findOrFail($id);
 
-    return view('admin/categories/edit', compact('product'));
+    return view('admin/categories/edit', compact('category'));
   }
 
   public function update(CategoriesRequest $request, $id)
@@ -38,7 +38,7 @@ class CategoryController extends Controller
   {
     $category = Category::findOrFail($id);
 
-    return view('admin/categories/show', compact('product'));
+    return view('admin/categories/show', compact('category'));
   }
 
   public function create()
@@ -60,6 +60,6 @@ class CategoryController extends Controller
     
     Category::destroy($id);
 
-    return redirect('categories')->with('flash_message', 'Product deleted!');
+    return redirect('categories')->with('flash_message', 'Category deleted!');
   }
 }

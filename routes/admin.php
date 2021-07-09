@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Backend\SiteController;
 use App\Http\Controllers\Backend\ProductController;
@@ -20,4 +21,6 @@ Route::name('admin.')
         Route::resource('/user', UserController::class);
 
         Route::resource('/products', ProductController::class);
+
+        Route::resource('/categories', CategoryController::class);
     });

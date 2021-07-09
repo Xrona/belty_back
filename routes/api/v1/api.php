@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\ProductController;
@@ -19,4 +20,6 @@ Route::middleware('api')
     ->name('api.v1.')
     ->group(function () {
         Route::resource('/products', ProductController::class);
+
+        Route::resource('/categories', CategoryController::class);
     });

@@ -20,7 +20,6 @@ class ProductController extends ResponseController
         return $this->sendResponse(new ProductListResource($builder), 'products');
     }
 
-
     public function store(ProductsRequest $request): JsonResponse
     {
         $requestData = $request->validated();

@@ -26,7 +26,7 @@ class Category extends Model
       'updated_at',
   ];
 
-  public function products(): HasMany
+  public function product(): HasMany
   {
     return $this->hasMany(Product::class);
   }

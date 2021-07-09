@@ -246,6 +246,11 @@ return [
             'url'         => '/products',
             'icon'        => 'fas fa-file',
         ],
+        [
+            'text'        => 'categories',
+            'url'         => '/categories',
+            'icon'        => 'fas fa-file',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

@@ -251,6 +251,26 @@ return [
             'url'         => '/categories',
             'icon'        => 'fas fa-file',
         ],
+        [
+            'text'        => 'colors',
+            'url'         => '/colors',
+            'icon'        => 'fas fa-file',
+        ],
+        [
+            'text'        => 'countries',
+            'url'         => '/countries',
+            'icon'        => 'fas fa-file',
+        ],
+        [
+            'text'        => 'materials',
+            'url'         => '/materials',
+            'icon'        => 'fas fa-file',
+        ],
+        [
+            'text'        => 'sizes',
+            'url'         => '/sizes',
+            'icon'        => 'fas fa-file',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

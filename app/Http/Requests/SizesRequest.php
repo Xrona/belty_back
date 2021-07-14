@@ -6,7 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoriesRequest extends FormRequest
+class SizesRequest extends FormRequest
 {
 
   public function rules()

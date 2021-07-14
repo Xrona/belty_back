@@ -16,6 +16,7 @@
           <table class="table">
             <thead>
             <tr>
+              <th>Id</th>
               <th>#</th>
               <th>name</th>
             </tr>
@@ -23,6 +24,7 @@
             <tbody>
               @foreach($categories as $category)
                 <tr>
+                  <td>{{ $category['id']}}</td>
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $category['name'] }}</td>
                   <td>
@@ -32,7 +34,7 @@
                     <form method="POST" action="{{ url('/categories' . '/' . $category->id) }}" accept-charset="UTF-8" style="display:inline">
                         {{ method_field('DELETE') }}
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger btn-sm" title="Delete User" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm" title="Delete Category" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                     </form>
                   </td>
                 </tr>

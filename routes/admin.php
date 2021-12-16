@@ -35,4 +35,6 @@ Route::name('admin.')
         Route::resource('/materials', MaterialController::class);
 
         Route::resource('/sizes', SizeController::class);
+
+        Route::resource('/home', SiteController::class);
     });

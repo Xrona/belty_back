@@ -33,7 +33,21 @@
     <input class="form-control" name="status" type="text" id="status" value="{{ isset($product->status) ? $product->status : ''}}" >
     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group">
+    <label>Minimal</label>
+    <div class="select2-purple">
+        <select class="js-example-basic-single" style="width: 100%;">
+            <option selected="selected">Alabama</option>
+            <option>Alaska</option>
+            <option>California</option>
+            <option>Delaware</option>
+            <option>Tennessee</option>
+            <option>Texas</option>
+            <option>Washington</option>
+        </select>
+    </div>
 
+</div>
 
 
 <div class="form-group">

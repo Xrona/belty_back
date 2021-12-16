@@ -7,4 +7,5 @@ return [
   'countries'=>'Страны',
   'sizes'=>'Размеры',
   'materials'=>'Материалы',
+  'users'=>'Пользователи',
 ];

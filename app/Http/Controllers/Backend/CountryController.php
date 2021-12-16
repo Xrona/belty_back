@@ -62,4 +62,7 @@ class CountryController extends Controller
 
     return redirect('countries')->with('flash_message', 'Country deleted!');
   }
+  public function coutryshow(){
+    $
+  }
 }

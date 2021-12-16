@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -6,60 +6,67 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductsRequest;
+use App\Models\Category;
+use App\Models\Country;
+use App\Models\Material;
 use App\Models\Product;
 
 class ProductController extends Controller
 {
-  public function index()
-  {
-    $products = Product::all();
+    public function index()
+    {
+        $products = Product::all();
 
-    return view('admin/products/index', compact('products'));
-  }
+        return view('admin/products/index', compact('products'));
+    }
 
-  public function edit($id)
-  {
-    $product = Product::findOrFail($id);
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
 
-    return view('admin/products/edit', compact('product'));
-  }
+        $countries = Country::all()->toArray();
+        $categories = Category::all()->toArray();
+        $materials = Material::all()->toArray();
 
-  public function update(ProductsRequest $request, $id)
-  {
-    $requestData = $request->all();
+        return view('admin/products/edit', compact(['product', 'countries', 'materials', 'categories']));
+    }
 
-    $product = Product::findOrFail($id);
-    $product->update($requestData);
+    public function update(ProductsRequest $request, $id)
+    {
+        $requestData = $request->all();
 
-    return redirect('products')->with('flash_message', 'Product updated!');
-  }
+        $product = Product::findOrFail($id);
+        $product->update($requestData);
 
-  public function show($id) 
-  {
-    $product = Product::findOrFail($id);
+        return redirect('products')->with('flash_message', 'Product updated!');
+    }
 
-    return view('admin/products/show', compact('product'));
-  }
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
 
-  public function create()
-  {
-    return view('admin/products/create');
-  }
+        return view('admin/products/show', compact('product'));
+    }
 
-  public function store(ProductsRequest $request) 
-  {
-    $requestData = $request->all();
+    public function create()
+    {
+        return view('admin/products/create');
+    }
 
-    Product::create($requestData);
+    public function store(ProductsRequest $request)
+    {
+        $requestData = $request->all();
 
-    return redirect('products')->with('flash_message', 'Product added!');
-  }
+        Product::create($requestData);
 
-  public function destroy($id)
-  {
-    
-    Product::destroy($id);
+        return redirect('products')->with('flash_message', 'Product added!');
+    }
 
-    return redirect('products')->with('flash_message', 'Product deleted!');
-  }
+    public function destroy($id)
+    {
+
+        Product::destroy($id);
+
+        return redirect('products')->with('flash_message', 'Product deleted!');
+    }
 }

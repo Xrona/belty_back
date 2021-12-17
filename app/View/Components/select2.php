@@ -2,13 +2,16 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class select2 extends Component
 {
     public String $name;
     public Array $list;
-    public int $currentValue;
+    public int|null $currentValue;
     public String $label;
 
     /**
@@ -27,7 +30,7 @@ class select2 extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return Application|Factory|View
      */
     public function render()
     {

@@ -257,7 +257,7 @@ return [
         [
             'text'        => 'users',
             'url'         => '/user',
-            'icon'        => 'fas fa-file',    
+            'icon'        => 'fas fa-file',
         ],
     ],
 
@@ -379,5 +379,5 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/9.-Other-Configuration
     */
 
-    'livewire' => true,
+    'livewire' => false,
 ];

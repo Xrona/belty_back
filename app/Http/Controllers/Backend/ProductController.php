@@ -11,6 +11,10 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Material;
 use App\Models\Product;
+use App\Models\Size;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 
 class ProductController extends Controller
 {
@@ -18,7 +22,7 @@ class ProductController extends Controller
     {
         if ($request === null) {
             $products = Product::all();
-        } else { 
+        } else {
             $products = Product::search($request);
         }
         return view('admin/products/index', compact('products'));
@@ -31,16 +35,23 @@ class ProductController extends Controller
         $countries = Country::all()->toArray();
         $categories = Category::all()->toArray();
         $materials = Material::all()->toArray();
+        $sizes = Size::all()->toArray();
 
-        return view('admin/products/edit', compact(['product', 'countries', 'materials', 'categories']));
+        return view('admin/products/edit', compact(['product', 'countries', 'materials', 'categories', 'sizes']));
     }
 
-    public function update(ProductsRequest $request, $id)
+    public function update(ProductsRequest $request, $id): Redirector|Application|RedirectResponse
     {
         $requestData = $request->all();
 
         $product = Product::findOrFail($id);
         $product->update($requestData);
+
+        $product->sizes()->detach();
+
+        if ($request->input('sizes')) {
+            $product->sizes()->attach($requestData['sizes']);
+        }
 
         return redirect('products')->with('flash_message', 'Product updated!');
     }
@@ -57,22 +68,26 @@ class ProductController extends Controller
         $countries = Country::all()->toArray();
         $categories = Category::all()->toArray();
         $materials = Material::all()->toArray();
+        $sizes = Size::all()->toArray();
 
-        return view('admin/products/create', compact(['countries', 'materials', 'categories']));
+        return view('admin/products/create', compact(['countries', 'materials', 'categories', 'sizes']));
     }
 
     public function store(ProductsRequest $request)
     {
         $requestData = $request->all();
 
-        Product::create($requestData);
+        $product = Product::create($requestData);
+
+        if ($product && $request->input('sizes')) {
+            $product->sizes()->attach($requestData['sizes']);
+        }
 
         return redirect('products')->with('flash_message', 'Product added!');
     }
 
     public function destroy($id)
     {
-
         Product::destroy($id);
 
         return redirect('products')->with('flash_message', 'Product deleted!');

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -34,7 +34,7 @@ class CountryController extends Controller
     return redirect('countries')->with('flash_message', 'Country updated!');
   }
 
-  public function show($id) 
+  public function show($id)
   {
     $country = Country::findOrFail($id);
 
@@ -46,7 +46,7 @@ class CountryController extends Controller
     return view('admin/countries/create');
   }
 
-  public function store(CountriesRequest $request) 
+  public function store(CountriesRequest $request)
   {
     $requestData = $request->all();
 
@@ -57,7 +57,7 @@ class CountryController extends Controller
 
   public function destroy($id)
   {
-    
+
     Country::destroy($id);
 
     return redirect('countries')->with('flash_message', 'Country deleted!');

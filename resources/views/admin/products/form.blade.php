@@ -1,6 +1,7 @@
-@php(
-    $item = $product ?? null
-)
+@php
+    $item = $product ?? null;
+@endphp
+
 
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label for="name" class="control-label">name</label>
@@ -23,16 +24,14 @@
     <x-select2 name="category_id" :list="$categories" :currentValue="$item->category_id" label="Category"/>
     {!! $errors->first('category', '<p class="help-block">:message</p>') !!}
 
-
     <x-select2 name="material_id" :list="$materials" :currentValue="$item->material_id" label="Material"/>
     {!! $errors->first('material', '<p class="help-block">:message</p>') !!}
-
 
     <x-select2 name="country_id" :list="$countries" :currentValue="$item->country_id" label="Country"/>
     {!! $errors->first('country', '<p class="help-block">:message</p>') !!}
 
-{{--    <x-select2-multiple name="sizes[]" :list="$sizes" :currentValues="$item-sizes" label="Sizes"/>--}}
-{{--    {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}--}}
+    <x-multi-select name="sizes" :list="$sizes" :current-values="$item->sizes" label="Sizes"/>
+    {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 
 @else
 
@@ -47,8 +46,8 @@
     <x-select2 name="country_id" :list="$countries" :currentValue="null" label="Country"/>
     {!! $errors->first('country', '<p class="help-block">:message</p>') !!}
 
-{{--    <x-select2-multiple name="sizes[]" :list="$sizes" :currentValues="null" label="Sizes"/>--}}
-{{--    {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}--}}
+    <x-multi-select name="sizes" :list="$sizes" :currentValues="null" label="Sizes"/>
+    {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 
 @endif
 

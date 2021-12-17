@@ -18,6 +18,7 @@ class ProductsRequest extends FormRequest
             'price' => 'required|string',
             'article' => 'required|string',
             'country_id' => 'required|int',
+            'sizes' =>  'required|array',
             'category_id' => [
                 'required',
                 Rule::exists((new Category)->getTable(), 'id'),

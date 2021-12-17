@@ -6,21 +6,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Size extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $table = 'sizes';
+    protected $table = 'sizes';
 
-  protected $fillable = [
-      'name',
-  ];
+    protected $fillable = [
+        'name',
+    ];
 
-  protected $guarded = [
-      'id',
-      'created_at',
-      'updated_at',
-  ];
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

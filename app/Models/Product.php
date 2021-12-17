@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 class Product extends Model
@@ -33,15 +34,21 @@ class Product extends Model
         'updated_at',
     ];
 
+    public static function search(ProductsSearchRequest $request)
+    {
+        $search = $request->input('search');
+
+        return Product::query()
+            ->where('name','iLIKE',"%{$search}%")->get();
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
-    public static function search(ProductsSearchRequest $request)
+
+    public function sizes(): BelongsToMany
     {
-        $search = $request->input('search');
-        
-        return Product::query() 
-            ->where('name','iLIKE',"%{$search}%")->get();
+        return  $this->belongsToMany(Size::class);
     }
 }

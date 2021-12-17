@@ -7,12 +7,19 @@
   <a href="{{ url('/products/create') }}" title="create product"><button class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> create product</button></a>
 @stop
 
-
 @section('content')
     <div class="card-body">
-
-
-        <div class="table-responsive">
+      <form class="form-inline" type="get" action="{{url('/products')}}">
+        <div class="input-group">
+          <input type="search" name="search" class="form-control form control-lg" placeholder="Search"></div>  
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-outline-success ml-2">
+            <i class="fa fa-search"></i>
+          </button>
+          <a href="/products" class="btn btn-warning ml-3"> Очистить поиск </a>
+        </div>
+      </form>
+        <div class="table-responsive mt-3">
           <table class="table">
             <thead>
             <tr>

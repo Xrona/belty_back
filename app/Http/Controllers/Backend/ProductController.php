@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductsRequest;
+use App\Http\Requests\ProductsSearchRequest;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Material;
@@ -13,10 +14,13 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(ProductsSearchRequest $request)
     {
-        $products = Product::all();
-
+        if ($request === null) {
+            $products = Product::all();
+        } else { 
+            $products = Product::search($request);
+        }
         return view('admin/products/index', compact('products'));
     }
 
@@ -50,7 +54,11 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('admin/products/create');
+        $countries = Country::all()->toArray();
+        $categories = Category::all()->toArray();
+        $materials = Material::all()->toArray();
+
+        return view('admin/products/create', compact(['countries', 'materials', 'categories']));
     }
 
     public function store(ProductsRequest $request)

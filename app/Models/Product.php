@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Http\Requests\ProductsSearchRequest;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,5 +36,12 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+    public static function search(ProductsSearchRequest $request)
+    {
+        $search = $request->input('search');
+        
+        return Product::query() 
+            ->where('name','iLIKE',"%{$search}%")->get();
     }
 }

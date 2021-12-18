@@ -9,10 +9,3 @@
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>
-
-@section('adminlte_js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js"></script>
-    <script>
-        $('.color-picker').colorpicker()
-    </script>
-@endsection

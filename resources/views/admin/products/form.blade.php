@@ -64,22 +64,3 @@
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>
-
-{{--@section('adminlte_js')--}}
-{{--    <script>--}}
-{{--        try {--}}
-{{--            $('.select2').select2();--}}
-{{--        } catch (error) {--}}
-{{--            console.log(error)--}}
-{{--        }--}}
-
-{{--        $('.color-body').on('click', function (e) {--}}
-{{--            $(this).toggleClass('active')--}}
-
-{{--            let checkbox =  $(this).next('input')[0]--}}
-
-{{--            checkbox.toggleAttribute('checked')--}}
-
-{{--        })--}}
-{{--    </script>--}}
-{{--@endsection--}}

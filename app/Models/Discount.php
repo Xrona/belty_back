@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Material extends Model
+class Discount extends Model
 {
     use HasFactory;
 
-    protected $table = 'materials';
+    protected $table = 'discounts';
 
     protected $fillable = [
-        'name',
+        'value',
+        'is_percent',
     ];
 
     protected $guarded = [
@@ -24,8 +26,8 @@ class Material extends Model
         'updated_at',
     ];
 
-    public function products(): HasMany
+    public function Product() :HasOne
     {
-        return $this->hasMany(Product::class);
+        return $this->hasOne(Product::class);
     }
 }

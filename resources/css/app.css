@@ -1,1 +1,28 @@
-@import '../../vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css';
+.color-active {
+    border: 5px solid green;
+}
+
+
+#discountAccordion > p {
+    margin-bottom: 25px;
+}
+
+#discountAccordion .select-discount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+#discountAccordion .select-discount .select2 {
+    width: 150px;
+}
+
+#discountAccordion .create-discount button {
+    margin-top: 15px;
+    float: right;
+}
+
+#discountAccordion .create-discount button:after {
+    clear: both;
+}

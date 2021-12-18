@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.layout')
 
 @section('title', 'Users')
 
@@ -7,7 +7,7 @@
 @stop
 @section('content')
     <div class="card-body">
-        
+
         <div class="table-responsive">
             <table class="table">
                 <thead>

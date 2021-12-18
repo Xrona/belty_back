@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Http\Requests\ProductsSearchRequest;
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,7 +38,17 @@ class Product extends Model
         $search = $request->input('search');
 
         return Product::query()
-            ->where('name','iLIKE',"%{$search}%")->get();
+            ->where('name', 'iLIKE', "%{$search}%")->get();
+    }
+
+    public function getDiscountPrice() {
+        if ($this->discount->is_percent) {
+            $discountPrice = $this->price - (($this->price / 100) * $this->discount->value);
+        } else {
+            $discountPrice = $this->price - $this->discount->value;
+        }
+
+        return $discountPrice;
     }
 
     public function category(): BelongsTo
@@ -49,11 +58,26 @@ class Product extends Model
 
     public function sizes(): BelongsToMany
     {
-        return  $this->belongsToMany(Size::class);
+        return $this->belongsToMany(Size::class);
     }
 
     public function colors(): BelongsToMany
     {
         return $this->belongsToMany(Color::class, 'product_color');
+    }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function material(): BelongsTo
+    {
+        return $this->belongsTo(Material::class);
+    }
+
+    public function discount(): BelongsTo
+    {
+        return  $this->belongsTo(Discount::class);
     }
 }

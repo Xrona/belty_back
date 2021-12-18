@@ -11,3 +11,5 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('can:use-admin-panel')
     ->name('logout');
+
+

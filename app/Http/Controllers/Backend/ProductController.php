@@ -39,7 +39,7 @@ class ProductController extends Controller
         $sizes = Size::all()->toArray();
         $colors = Color::all()->toArray();
 
-        return view('admin/products/edit', compact(['product', 'countries', 'materials', 'categories', 'sizes','colors']));
+        return view('admin/products/edit', compact(['product', 'countries', 'materials', 'categories', 'sizes', 'colors']));
     }
 
     public function update(ProductsRequest $request, $id): Redirector|Application|RedirectResponse

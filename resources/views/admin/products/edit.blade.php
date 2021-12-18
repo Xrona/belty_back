@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.layout')
 
 @section('title', "Edit product $product->id")
 
@@ -10,8 +10,6 @@
 
     <div class="card-body">
         <a href="{{ url('/products') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-        <br />
-        <br />
 
         @if ($errors->any())
             <ul class="alert alert-danger">

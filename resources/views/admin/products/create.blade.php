@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.layout')
 
 @section('title', 'Create New Product')
 

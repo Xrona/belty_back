@@ -6,25 +6,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Country extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $table = 'countries';
+    protected $table = 'countries';
 
-  protected $fillable = [
-      'name',
-  ];
+    protected $fillable = [
+        'name',
+    ];
 
-  protected $guarded = [
-      'id',
-      'created_at',
-      'updated_at',
-  ];
-  public function product(): BelongsTo
-  {
-      return $this->belongsTo(Product::class);
-  }
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 }

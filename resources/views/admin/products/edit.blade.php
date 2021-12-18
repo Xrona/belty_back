@@ -5,6 +5,7 @@
 @section('content_header')
     <h1>Edit Product #{{ $product->id }}</h1>
 @stop
+
 @section('content')
 
     <div class="card-body">
@@ -29,4 +30,6 @@
         </form>
 
     </div>
-@endsection
+
+
+    @stop

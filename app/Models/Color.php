@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Color extends Model
 {
@@ -24,8 +25,8 @@ class Color extends Model
       'updated_at',
   ];
 
-  public function product(): BelongsTo
+  public function product(): BelongsToMany
   {
-      return $this->belongsTo(Product::class);
+      return $this->belongsToMany(Product::class, 'product_color');
   }
 }

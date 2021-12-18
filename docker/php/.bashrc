@@ -1,4 +1,4 @@
-echo "PHP version: 8.0-fpm" 
+echo "PHP version: ${PHP_VERSION}"
 
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then

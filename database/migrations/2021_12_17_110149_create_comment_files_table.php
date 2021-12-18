@@ -18,6 +18,12 @@ class CreateCommentFilesTable extends Migration
             $table->integer('comment_id');
             $table->string('path');
             $table->timestamps();
+
+            $table->foreign('comment_id')
+                ->references('id')
+                ->on('comments')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

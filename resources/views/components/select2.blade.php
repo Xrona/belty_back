@@ -11,15 +11,5 @@
             </select>
 
         </div>
-
-        @section('adminlte_js')
-            <script>
-                try {
-                    $('.select2').select2();
-                } catch (error) {
-                    console.log(error)
-                }
-            </script>
-        @endsection
     </div>
 </div>

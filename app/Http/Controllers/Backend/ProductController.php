@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductsRequest;
 use App\Http\Requests\ProductsSearchRequest;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Country;
 use App\Models\Material;
 use App\Models\Product;
@@ -36,8 +37,9 @@ class ProductController extends Controller
         $categories = Category::all()->toArray();
         $materials = Material::all()->toArray();
         $sizes = Size::all()->toArray();
+        $colors = Color::all()->toArray();
 
-        return view('admin/products/edit', compact(['product', 'countries', 'materials', 'categories', 'sizes']));
+        return view('admin/products/edit', compact(['product', 'countries', 'materials', 'categories', 'sizes','colors']));
     }
 
     public function update(ProductsRequest $request, $id): Redirector|Application|RedirectResponse
@@ -48,9 +50,14 @@ class ProductController extends Controller
         $product->update($requestData);
 
         $product->sizes()->detach();
+        $product->colors()->detach();
 
         if ($request->input('sizes')) {
             $product->sizes()->attach($requestData['sizes']);
+        }
+
+        if ($request->input('colors')) {
+            $product->colors()->attach($requestData['colors']);
         }
 
         return redirect('products')->with('flash_message', 'Product updated!');
@@ -69,8 +76,9 @@ class ProductController extends Controller
         $categories = Category::all()->toArray();
         $materials = Material::all()->toArray();
         $sizes = Size::all()->toArray();
+        $colors = Color::all()->toArray();
 
-        return view('admin/products/create', compact(['countries', 'materials', 'categories', 'sizes']));
+        return view('admin/products/create', compact(['countries', 'materials', 'categories', 'sizes', 'colors']));
     }
 
     public function store(ProductsRequest $request)
@@ -81,6 +89,10 @@ class ProductController extends Controller
 
         if ($product && $request->input('sizes')) {
             $product->sizes()->attach($requestData['sizes']);
+        }
+
+        if ($product && $request->input('colors')) {
+            $product->colors()->attach($requestData['colors']);
         }
 
         return redirect('products')->with('flash_message', 'Product added!');

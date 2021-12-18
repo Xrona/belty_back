@@ -33,6 +33,8 @@
     <x-multi-select name="sizes" :list="$sizes" :current-values="$item->sizes" label="Sizes"/>
     {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 
+    <x-select-colors name="colors" :list="$colors" :current-values="$item->colors" label="Colors"/>
+    {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 @else
 
     <x-select2 name="category_id" :list="$categories" :currentValue="null" label="Category"/>
@@ -49,6 +51,8 @@
     <x-multi-select name="sizes" :list="$sizes" :currentValues="null" label="Sizes"/>
     {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 
+    <x-select-colors name="colors" :list="$colors" :currentValues="null" label="Colors"/>
+    {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 @endif
 
 <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
@@ -60,3 +64,22 @@
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>
+
+{{--@section('adminlte_js')--}}
+{{--    <script>--}}
+{{--        try {--}}
+{{--            $('.select2').select2();--}}
+{{--        } catch (error) {--}}
+{{--            console.log(error)--}}
+{{--        }--}}
+
+{{--        $('.color-body').on('click', function (e) {--}}
+{{--            $(this).toggleClass('active')--}}
+
+{{--            let checkbox =  $(this).next('input')[0]--}}
+
+{{--            checkbox.toggleAttribute('checked')--}}
+
+{{--        })--}}
+{{--    </script>--}}
+{{--@endsection--}}

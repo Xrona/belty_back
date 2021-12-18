@@ -207,9 +207,9 @@ return [
     |
     */
 
-    'enabled_laravel_mix' => false,
-    'laravel_mix_css_path' => 'css/app.css',
-    'laravel_mix_js_path' => 'js/app.js',
+    'enabled_laravel_mix' => true,
+    'laravel_mix_css_path' => '/css/app.css',
+    'laravel_mix_js_path' => '/js/app.js',
 
     /*
     |--------------------------------------------------------------------------
@@ -363,6 +363,16 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'BootstrapColorPicker' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css',
                 ],
             ],
         ],

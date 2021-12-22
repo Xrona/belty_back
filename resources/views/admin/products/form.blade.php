@@ -2,6 +2,12 @@
     $item = $product ?? null;
 @endphp
 
+<div class="form-group mt-4 d-flex align-items-center  {{ $errors->has('status') ? 'has-error' : ''}}">
+    <label for="status" class="control-label mr-2 mb-0">status</label>
+    <input name="status" type="hidden" value="0" >
+    <input name="status" type="checkbox" id="status" value="1" {{$product->status ? 'checked' : ''}}>
+    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+</div>
 
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label for="name" class="control-label">name</label>
@@ -54,12 +60,6 @@
     <x-select-colors name="colors" :list="$colors" :currentValues="null" label="Colors"/>
     {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 @endif
-
-<div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
-    <label for="status" class="control-label">status</label>
-    <input class="form-control" name="status" type="text" id="status" value="{{ $product->status ?? ''}}">
-    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
-</div>
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">

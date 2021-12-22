@@ -24,6 +24,8 @@ class Product extends Model
         'category_id',
         'material_id',
         'country_id',
+        'discount_id',
+        'enable_discount',
         'status',
     ];
 
@@ -42,6 +44,10 @@ class Product extends Model
     }
 
     public function getDiscountPrice() {
+        if (is_null($this->discount_id)) {
+            return  0;
+        }
+
         if ($this->discount->is_percent) {
             $discountPrice = $this->price - (($this->price / 100) * $this->discount->value);
         } else {

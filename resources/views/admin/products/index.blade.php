@@ -28,6 +28,9 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Price</th>
+                    <th>Discount price</th>
+                    <th>Discount</th>
+                    <th>Enable/Disable discount</th>
                     <th>Category</th>
                     <th>Material</th>
                     <th>Sizes</th>
@@ -45,6 +48,18 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{$product->price}}</td>
+                        <td class="td-discount-price">{{$product->getDiscountPrice()}}</td>
+                        @if(is_null($product->discount))
+                            <td class="td-discount">Not</td>
+                        @else
+                            <td class="td-discount">{{$product->discount->value}}</td>
+                        @endif
+                        <td>
+                            <input class="enable-discount" data-enable-product-id="{{$product->id}}"
+                                   {{$product->discount_id ? '' : 'disabled'}}
+                                   type="checkbox" {{$product->enable_discount ? 'checked' : ''}}
+                            >
+                        </td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{$product->material->name}}</td>
                         <td>{{implode(', ', $arraySizes)}}</td>
@@ -61,7 +76,15 @@
                                 @endforeach
                             </div>
                         </td>
-                        <td>{{$product->status}}</td>
+                        <td>
+                            <input
+                                type="checkbox"
+                                class="product-status"
+                                data-product-id="{{$product->id}}"
+                                {{ $product->status ? 'checked' : ''}}
+                                value="1"
+                            >
+                        </td>
                         <td>
                             <a href="{{ url('/products/' . $product->id) }}" title="View User">
                                 <button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View
@@ -75,7 +98,7 @@
                                 data-product-id="{{$product->id}}"
                                 data-product-name="{{$product->name}}"
                             >
-                                add discount
+                               {{ $product->discount_id ? 'Change discount' : 'Add discount' }}
                             </button>
                             <a href="{{ url('/products/' . $product->id . '/edit') }}" title="Edit User">
                                 <button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o"
@@ -100,6 +123,20 @@
             </table>
         </div>
     </div>
+    <div class="position-fixed p-3" style="bottom: 50px; right: 15px;">
+        <div role="alert" aria-live="assertive" aria-atomic="true" class="toast toast-status" data-autohide="true" data-delay="2000">
+            <div class="toast-body btn btn-success">
+                Status changed
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed p-3" style="bottom: 50px; right: 15px;">
+        <div role="alert" aria-live="assertive" aria-atomic="true" class="toast toast-discount" data-autohide="true" data-delay="2000">
+            <div class="toast-body btn btn-success">
+                Discount changed
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -122,24 +159,28 @@
                         <div class="collapse multi-collapse" id="selectDiscount"
                              data-parent="#discountAccordion"
                         >
-                            <form action="">
+                            <form id="formAddDiscount">
+                                {{ csrf_field() }}
                                 <div class="select-discount">
+                                    <input class="d-none product-id" type="text" name="product_id">
                                     <div id="productName"></div>
-                                    <select class="select2 form-control">
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
+                                    <select class="select2 form-control" name="discount_id">
+                                        @foreach($discounts as $discount)
+                                            <option value="{{$discount['id']}}">{{$discount['value']}}</option>
+                                        @endforeach
                                     </select>
                                     <button type="submit" class="btn btn-success">Confirm</button>
                                 </div>
                             </form>
                         </div>
                         <div class="collapse multi-collapse" id="createDiscount" data-parent="#discountAccordion">
-                            <form action="">
+                            <form id="formCreateDiscount">
+                                {{ csrf_field() }}
                                 <div class="create-discount">
-                                    <input type="checkbox">
+                                    <input class="d-none product-id" type="text" name="product_id">
+                                    <input type="checkbox" name="is_percent" value="1">
                                     <label for="">Скидка в процентах?</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="value">
                                     <button type="submit" class="btn btn-success">Confirm</button>
                                 </div>
                             </form>

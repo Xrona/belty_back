@@ -26,3 +26,13 @@
 #discountAccordion .create-discount button:after {
     clear: both;
 }
+
+.product-discount-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+input[type='checkbox'] {
+    width: 25px;
+    height: 25px;
+}

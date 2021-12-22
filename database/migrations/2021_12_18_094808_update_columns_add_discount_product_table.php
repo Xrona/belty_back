@@ -14,12 +14,13 @@ class UpdateColumnsAddDiscountProductTable extends Migration
     public function up()
     {
         Schema::table('products', function(Blueprint $table) {
-            $table->integer('discount_id');
+            $table->integer('discount_id')->nullable();
+            $table->smallInteger('enable_discount')->default(0);
 
             $table->foreign('discount_id')
                 ->references('id')
                 ->on('discounts')
-                ->onDelete('cascade')
+                ->onDelete('set null')
                 ->onUpdate('cascade');
         });
     }
@@ -35,6 +36,7 @@ class UpdateColumnsAddDiscountProductTable extends Migration
             $table->dropForeign('products_discount_id_foreign');
 
             $table->dropColumn('discount_id');
+            $table->dropColumn('enable_discount');
         });
     }
 }

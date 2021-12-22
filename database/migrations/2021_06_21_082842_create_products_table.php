@@ -21,9 +21,9 @@ class CreateProductsTable extends Migration
             $table->integer('category_id')->nullable();
             $table->integer('material_id')->nullable();
             $table->integer('country_id')->nullable();
-            $table->integer('status')->nullable();
+            $table->smallInteger('status')->default(0);
             $table->timestamps();
-            
+
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories')
@@ -35,7 +35,7 @@ class CreateProductsTable extends Migration
                 ->on('materials')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-                
+
             $table->foreign('country_id')
                 ->references('id')
                 ->on('countries')

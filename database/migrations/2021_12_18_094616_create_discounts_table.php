@@ -16,7 +16,7 @@ class CreateDiscountsTable extends Migration
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->integer('value');
-            $table->smallInteger('is_percent');
+            $table->smallInteger('is_percent')->default(0);
             $table->timestamps();
         });
     }

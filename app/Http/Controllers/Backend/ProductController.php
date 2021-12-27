@@ -54,7 +54,8 @@ class ProductController extends Controller
         return false;
     }
 
-    public function changeStatus($id) {
+    public function changeStatus($id)
+    {
         $product = Product::findOrFail($id);
 
         if ($product) {
@@ -133,20 +134,41 @@ class ProductController extends Controller
     public function update(ProductsRequest $request, $id): Redirector|Application|RedirectResponse
     {
         $requestData = $request->all();
-
         $product = Product::findOrFail($id);
+
         $product->update($requestData);
 
-        $product->sizes()->detach();
-        $product->colors()->detach();
-
         if ($request->input('sizes')) {
+            $product->sizes()->detach();
+
             $product->sizes()->attach($requestData['sizes']);
         }
 
         if ($request->input('colors')) {
+            $product->colors()->detach();
+
             $product->colors()->attach($requestData['colors']);
         }
+
+        if ($request->input('images')) {
+            $product->productImages()->delete();
+
+            $i = 0;
+
+            foreach ($requestData['images'] as $image) {
+                $name = explode('/', $image);
+
+                $product->productImages()->create([
+                    'url' => $image,
+                    'path' => $name[count($name) - 1],
+                    'queue' => $i,
+                ]);
+
+                $i++;
+            }
+        }
+
+
         return redirect('products')->with('flash_message', 'Product updated!');
     }
 
@@ -181,6 +203,22 @@ class ProductController extends Controller
         if ($product && $request->input('colors')) {
             $product->colors()->attach($requestData['colors']);
         }
+
+        if ($product && $request->input('images')) {
+            $i = 0;
+            foreach ($requestData['images'] as $image) {
+                $name = explode('/', $image);
+
+                $product->productImages()->create([
+                    'url' => $image,
+                    'path' => $name[count($name) - 1],
+                    'queue' => $i,
+                ]);
+
+                $i++;
+            }
+        }
+
 
         return redirect('products')->with('flash_message', 'Product added!');
     }

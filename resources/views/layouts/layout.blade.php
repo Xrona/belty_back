@@ -6,5 +6,6 @@
 
 @section('adminlte_js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="{{asset('js/app.js')}}"></script>
 @stop

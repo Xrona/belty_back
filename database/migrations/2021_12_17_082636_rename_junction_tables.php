@@ -15,7 +15,6 @@ class RenameJunctionTables extends Migration
     {
         Schema::rename('product_sizes', 'product_size');
         Schema::rename('product_colors', 'product_color');
-        Schema::rename('product_orders', 'product_order');
     }
 
     /**
@@ -27,6 +26,5 @@ class RenameJunctionTables extends Migration
     {
         Schema::rename('product_size', 'product_sizes');
         Schema::rename('product_color', 'product_colors');
-        Schema::rename('product_order', 'product_orders');
     }
 }

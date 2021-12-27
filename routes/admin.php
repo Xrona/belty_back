@@ -5,9 +5,11 @@ use App\Http\Controllers\Backend\ColorController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\DiscountController;
 use App\Http\Controllers\Backend\MaterialController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SiteController;
 use App\Http\Controllers\Backend\SizeController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,4 +54,10 @@ Route::name('admin.')
         Route::resource('/sizes', SizeController::class);
 
         Route::resource('/home', SiteController::class);
+
+        Route::post('/upload-image', [ImageController::class, 'upload']);
+
+        Route::post('/delete-image', [ImageController::class, 'delete']);
+
+        Route::resource('/orders', OrderController::class);
     });

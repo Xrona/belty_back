@@ -9,4 +9,5 @@ return [
     'materials' => 'Материалы',
     'users' => 'Пользователи',
     'discounts' => 'Скидки',
+    'orders' => 'Заказы',
 ];

@@ -1,3 +1,5 @@
+import './image-area.js'
+
 $(function () {
   $('.color-picker').colorpicker()
 

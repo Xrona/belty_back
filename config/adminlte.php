@@ -225,6 +225,11 @@ return [
 
     'menu' => [
         [
+            'text'        => 'orders',
+            'url'         => '/orders',
+            'icon'        => 'fas fa-file',
+        ],
+        [
             'text'        => 'products',
             'url'         => '/products',
             'icon'        => 'fas fa-file',

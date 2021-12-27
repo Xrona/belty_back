@@ -5,23 +5,23 @@
 <div class="form-group mt-4 d-flex align-items-center  {{ $errors->has('status') ? 'has-error' : ''}}">
     <label for="status" class="control-label mr-2 mb-0">status</label>
     <input name="status" type="hidden" value="0" >
-    <input name="status" type="checkbox" id="status" value="1" {{$product->status ? 'checked' : ''}}>
+    <input name="status" type="checkbox" id="status" value="1" {{$item?->status ? 'checked' : ''}}>
     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
 </div>
 
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label for="name" class="control-label">name</label>
-    <input class="form-control" name="name" type="text" id="name" value="{{ $product->name ?? ''}}">
+    <input class="form-control" name="name" type="text" id="name" value="{{ $item?->name ?? ''}}">
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('article') ? 'has-error' : ''}}">
     <label for="article" class="control-label">article</label>
-    <input class="form-control" name="article" type="text" id="article" value="{{ $product->article ?? ''}}">
+    <input class="form-control" name="article" type="text" id="article" value="{{ $item?->article ?? ''}}">
     {!! $errors->first('article', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
     <label for="price" class="control-label">price</label>
-    <input class="form-control" name="price" type="text" id="price" value="{{ $product->price ?? ''}}">
+    <input class="form-control" name="price" type="text" id="price" value="{{ $item?->price ?? ''}}">
     {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
 </div>
 
@@ -60,6 +60,24 @@
     <x-select-colors name="colors" :list="$colors" :currentValues="null" label="Colors"/>
     {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 @endif
+
+    <label>Images</label>
+    @if($item?->productImages)
+    <ul id="image-area">
+        @foreach($item?->productImages as $image)
+            <li class="image" style="background-image: url({{$image->url}})" data-image-id="{{$image->id}}" data-image-name="{{$image->path}}">
+                <input class="d-none" type="text" name="images[]"  value="{{$image->url}}">
+                <div class="remove-image">
+                    <button>&times;</button>
+                </div>
+            </li>
+        @endforeach
+        <li class="add-image">
+            <button><span>&plus;</span></button>
+            <input type="file" id="productFileInput" class="d-none" multiple>
+        </li>
+    </ul>
+    @endif
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">

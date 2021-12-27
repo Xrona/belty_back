@@ -30,13 +30,14 @@
                     <th>Price</th>
                     <th>Discount price</th>
                     <th>Discount</th>
-                    <th>Enable/Disable discount</th>
+                    <th>Enable/Disable <br> discount</th>
                     <th>Category</th>
                     <th>Material</th>
                     <th>Sizes</th>
                     <th>Country</th>
                     <th>Colors</th>
                     <th>Status</th>
+                    <th>Bestseller</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -86,6 +87,15 @@
                             >
                         </td>
                         <td>
+                            <input
+                                type="checkbox"
+                                class="product-bestseller"
+                                data-product-id="{{$product->id}}"
+                                {{ $product->bestseller ? 'checked' : ''}}
+                                value="1"
+                            >
+                        </td>
+                        <td>
                             <a href="{{ url('/products/' . $product->id) }}" title="View User">
                                 <button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View
                                 </button>
@@ -127,6 +137,13 @@
         <div role="alert" aria-live="assertive" aria-atomic="true" class="toast toast-status" data-autohide="true" data-delay="2000">
             <div class="toast-body btn btn-success">
                 Status changed
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed p-3" style="bottom: 50px; right: 15px;">
+        <div role="alert" aria-live="assertive" aria-atomic="true" class="toast toast-bestseller" data-autohide="true" data-delay="2000">
+            <div class="toast-body btn btn-success">
+                Bestseller changed
             </div>
         </div>
     </div>

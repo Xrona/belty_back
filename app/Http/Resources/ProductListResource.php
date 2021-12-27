@@ -6,6 +6,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JetBrains\PhpStorm\ArrayShape;
 
 class ProductListResource extends JsonResource
 {
@@ -15,12 +16,24 @@ class ProductListResource extends JsonResource
      * @param  Request  $request
      * @return array
      */
-    public function toArray($request)
+    #[ArrayShape(['rows' => "array"])]
+    public function toArray($request): array
     {
-        $products = $this->resource->get();
+        $page = $request->get('page');
+
+        if($page !== null) {
+            $products = new ProductCollection(
+                $this
+                    ->resource
+                    ->paginate(perPage: $request->get('perPage'), page: $page)
+                    ->items()
+            );
+        } else {
+            $products = new ProductCollection($this->resource->get());
+        }
 
         return [
-            'rows' => new ProductCollection($products)
+            'rows' => $products,
         ];
     }
 }

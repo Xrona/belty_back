@@ -26,10 +26,11 @@ class ProductController extends Controller
 {
     public function index(ProductsSearchRequest $request): Factory|View|Application
     {
-        if ($request === null) {
+        if (!$request->input('search')) {
             $products = Product::all();
         } else {
-            $products = Product::search($request);
+            $products = Product::search($request)
+                ->get();
         }
 
         $discounts = Discount::all()->toArray();
@@ -71,6 +72,23 @@ class ProductController extends Controller
         return false;
     }
 
+    public function changeBestseller($id)
+    {
+        $product = Product::findOrFail($id);
+
+        if ($product) {
+            if($product->bestseller) {
+                $product->update(['bestseller' => 0]);
+            } else {
+                $product->update(['bestseller' => 1]);
+            }
+
+            return true;
+        }
+
+        return  false;
+    }
+
     public function addNewDiscount(CreateProductDiscountRequest $request)
     {
         $requestData = $request->all();
@@ -88,7 +106,7 @@ class ProductController extends Controller
             'discount_price' => $product->getDiscountPrice(),
             'discount' => $product->discount->value,
             'discount_id' => $product->discount->id,
-            'unit' => $product->discount->is_percent ? '%' : 'бел. руб.',
+            'unit' => $product->discount->is_percent ? '%' : 'р.',
             'product_id' => $product->id,
         ];
     }

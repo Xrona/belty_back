@@ -37,6 +37,8 @@ Route::name('admin.')
 
         Route::get('/products/status/{id}', [ProductController::class, 'changeStatus']);
 
+        Route::get('/products/bestseller/{id}', [ProductController::class, 'changeBestseller']);
+
         Route::resource('/categories', CategoryController::class);
 
         Route::resource('/discounts', DiscountController::class);

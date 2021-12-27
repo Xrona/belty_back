@@ -28,7 +28,7 @@
                             {{$order->getStatus()}}
                         </div>
                     </td>
-                    <td>{{$order->getFullPrice()}} <span>бел. руб.</span></td>
+                    <td>{{$order->getFullPrice()}} <span>р.</span></td>
                     <td>
                         <button
                             type="button"

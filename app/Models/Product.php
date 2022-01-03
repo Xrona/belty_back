@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Http\Requests\ProductsSearchRequest;
+use App\Models\Filters\Product\ProductSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Request;
 
 
 class Product extends Model
@@ -28,6 +30,9 @@ class Product extends Model
         'discount_id',
         'enable_discount',
         'status',
+        'bestseller',
+        'guarantee',
+        'width',
     ];
 
     protected $guarded = [
@@ -36,13 +41,11 @@ class Product extends Model
         'updated_at',
     ];
 
-    public static function search(ProductsSearchRequest $request)
+    public static function search(Request $request)
     {
-        $search = $request->input('search');
-
-        return Product::query()
-            ->where('name', 'iLIKE', "%{$search}%")->get();
+        return (new ProductSearch())->apply($request);
     }
+
 
     public function getDiscountPrice() {
         if (is_null($this->discount_id)) {

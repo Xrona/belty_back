@@ -25,7 +25,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>
                             {{$discount->value}}
-                            {{$discount->is_percent ? ' %' : ' бел. руб.'}}
+                            {{$discount->is_percent ? ' %' : ' р.'}}
                         </td>
                         <td>
                             <a href="{{ url('/discounts/' . $discount->id) }}" title="View User">

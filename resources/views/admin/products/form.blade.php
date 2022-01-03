@@ -4,11 +4,16 @@
 
 <div class="form-group mt-4 d-flex align-items-center  {{ $errors->has('status') ? 'has-error' : ''}}">
     <label for="status" class="control-label mr-2 mb-0">status</label>
-    <input name="status" type="hidden" value="0" >
+    <input name="status" type="hidden" value="0">
     <input name="status" type="checkbox" id="status" value="1" {{$item?->status ? 'checked' : ''}}>
     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
 </div>
-
+<div class="form-group mt-4 d-flex align-items-center  {{ $errors->has('bestseller') ? 'has-error' : ''}}">
+    <label for="bestseller" class="control-label mr-2 mb-0">Bestseller</label>
+    <input name="bestseller" type="hidden" value="0">
+    <input name="bestseller" type="checkbox" id="bestseller" value="1" {{$item?->bestseller ? 'checked' : ''}}>
+    {!! $errors->first('bestseller', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label for="name" class="control-label">name</label>
     <input class="form-control" name="name" type="text" id="name" value="{{ $item?->name ?? ''}}">
@@ -23,6 +28,16 @@
     <label for="price" class="control-label">price</label>
     <input class="form-control" name="price" type="text" id="price" value="{{ $item?->price ?? ''}}">
     {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('width') ? 'has-error' : ''}}">
+    <label for="width" class="control-label">Width</label>
+    <input class="form-control" name="width" type="text" id="width" value="{{ $item?->width ?? ''}}">
+    {!! $errors->first('width', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('guarantee') ? 'has-error' : ''}}">
+    <label for="guarantee" class="control-label">Guarantee</label>
+    <input class="form-control" name="guarantee" type="text" id="guarantee" value="{{ $item?->guarantee ?? ''}}">
+    {!! $errors->first('guarantee', '<p class="help-block">:message</p>') !!}
 </div>
 
 @if($item != null)
@@ -61,23 +76,24 @@
     {!! $errors->first('Sizes', '<p class="help-block">:message</p>') !!}
 @endif
 
-    <label>Images</label>
+<label>Images</label>
+<ul id="image-area">
     @if($item?->productImages)
-    <ul id="image-area">
         @foreach($item?->productImages as $image)
-            <li class="image" style="background-image: url({{$image->url}})" data-image-id="{{$image->id}}" data-image-name="{{$image->path}}">
-                <input class="d-none" type="text" name="images[]"  value="{{$image->url}}">
+            <li class="image" style="background-image: url({{$image->url}})" data-image-id="{{$image->id}}"
+                data-image-name="{{$image->path}}">
+                <input class="d-none" type="text" name="images[]" value="{{$image->url}}">
                 <div class="remove-image">
                     <button>&times;</button>
                 </div>
             </li>
         @endforeach
-        <li class="add-image">
-            <button><span>&plus;</span></button>
-            <input type="file" id="productFileInput" class="d-none" multiple>
-        </li>
-    </ul>
     @endif
+    <li class="add-image">
+        <button><span>&plus;</span></button>
+        <input type="file" id="productFileInput" class="d-none" multiple>
+    </li>
+</ul>
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">

@@ -48,6 +48,14 @@
                     <td> {{ $product->category->name }} </td>
                 </tr>
                 <tr>
+                    <th>Width</th>
+                    <td> {{ $product->width }} мм</td>
+                </tr>
+                <tr>
+                    <th>Guarantee</th>
+                    <td>до {{ $product->guarantee }} дней</td>
+                </tr>
+                <tr>
                     <th> Material</th>
                     <td> {{ $product->material->name}} </td>
                 </tr>
@@ -56,13 +64,17 @@
                     <td> {{ $product->country->name }} </td>
                 </tr>
                 <tr>
-                    <th> Status</th>
+                    <th>Status</th>
                     <td><input type="checkbox" disabled {{$product->status ? 'checked' : ''}}></td>
+                </tr>
+                <tr>
+                    <th>Bestseller</th>
+                    <td><input type="checkbox" disabled {{$product->bestseller ? 'checked' : ''}}></td>
                 </tr>
                 @if($product->discount)
                     <tr>
                         <th>Discount</th>
-                        <td>{{$product->discount->value}}{{ $product->discount->is_percent ? ' %' : ' бел. руб.' }}</td>
+                        <td>{{$product->discount->value}}{{ $product->discount->is_percent ? ' %' : ' р.' }}</td>
                     </tr>
                 @endif
                 </tbody>

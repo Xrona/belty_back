@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Http\Requests\ProductFilterRequest;
+use App\Http\Requests\ProductsSearchRequest;
+use App\Http\Resources\OneProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\ProductsRequest;
@@ -13,9 +16,11 @@ use Illuminate\Http\JsonResponse;
 
 class ProductController extends ResponseController
 {
-    public function index(): JsonResponse
+    public function index(ProductFilterRequest $request): JsonResponse
     {
-        $builder = Product::select('products.*');
+        $builder = Product::search($request)
+            ->select('products.*')
+            ->where('status', '>', 0);
 
         return $this->sendResponse(new ProductListResource($builder), 'products');
     }
@@ -29,8 +34,10 @@ class ProductController extends ResponseController
         return $this->sendResponse($product->saveOrFail(), 'added');
     }
 
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        return $this->sendReposne();
+        $product = Product::findOrFail($id);
+
+        return $this->sendResponse(new OneProductResource($product), 'one product');
     }
 }

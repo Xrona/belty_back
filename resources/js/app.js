@@ -45,6 +45,20 @@ $(function () {
     })
   })
 
+  $('.product-bestseller').on('click', function (e) {
+    let id = $(this).attr('data-product-id')
+
+    $.ajax({
+      url: `/products/bestseller/${id}`,
+      type: 'GET',
+      success: function(data) {
+        if (data) {
+          $('.toast-bestseller').toast('show')
+        }
+      }
+    })
+  })
+
   let discountPrice
   let discount
 

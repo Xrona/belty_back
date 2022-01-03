@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Size;
+use App\Models\Color;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cart extends Model
 {
@@ -16,6 +19,7 @@ class Cart extends Model
 
   protected $fillable = [
       'user_id',
+      'session_id',
   ];
 
   protected $guarded = [
@@ -23,4 +27,10 @@ class Cart extends Model
       'created_at',
       'updated_at',
   ];
+
+
+  public function cartProducts(): HasMany
+  {
+    return $this->hasMany(CartProduct::class);
+  }
 }

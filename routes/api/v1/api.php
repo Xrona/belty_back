@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\api\v1\AuthController;
+use App\Http\Controllers\api\v1\CartController;
 use App\Http\Controllers\api\v1\CategoryController;
 use App\Http\Controllers\api\v1\ColorController;
 use App\Http\Controllers\api\v1\CountryController;
@@ -28,4 +30,16 @@ Route::middleware('api')
         Route::resource('/colors', ColorController::class);
 
         Route::resource('/countries', CountryController::class);
+
+        Route::resource('/cart', CartController::class);
+
+        Route::post('/add-cart', [CartController::class, 'addCart']);
+
+        Route::post('register', [AuthController::class, 'register']);
+
+        Route::post('/login', [AuthController::class, 'login']);
+
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/user', [AuthController::class, 'user']);
+        });
     });

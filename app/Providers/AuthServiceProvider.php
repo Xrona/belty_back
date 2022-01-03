@@ -33,7 +33,5 @@ class AuthServiceProvider extends ServiceProvider
 
             return null;
         });
-
-        Passport::routes();
     }
 }

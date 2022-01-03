@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "jeroennoten/laravel-adminlte": "^3.5",
         "laravel/framework": "^8.0",
-        "laravel/passport": "^10.1",
+        "laravel/sanctum": "^2.13",
         "laravel/tinker": "^2.5|dev-develop",
         "orchestra/html": "^6.0",
         "spatie/laravel-permission": "^4.0"
@@ -33,7 +33,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": false
+        }
     },
     "extra": {
         "laravel": {

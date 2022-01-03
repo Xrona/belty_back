@@ -30,6 +30,6 @@ class ResponseController extends Controller
       'message' => $error,
     ];
 
-    return response()->json($resposnse, $code);
+    return response()->json($response, $code);
   }
 }

@@ -1,10 +1,9 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Cart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +15,8 @@ class CartProduct extends Model
     protected $table = 'cart_products';
 
     protected $fillable = [
-        'cart_id',
+        'session_id',
+        'user_id',
         'count',
         'product_id',
         'engraving',
@@ -31,9 +31,9 @@ class CartProduct extends Model
         'updated_at',
     ];
 
-    public function cart(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Cart::class);
+        return $this->belongsTo(User::class);
     }
 
     public function color(): BelongsTo

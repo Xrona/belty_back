@@ -43,4 +43,10 @@ class AuthController extends ResponseController
     {
         return Auth::user();
     }
+
+
+    public function getSession()
+    {
+        return session()->getId();
+    }
 }

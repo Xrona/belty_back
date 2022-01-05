@@ -35,9 +35,11 @@ Route::middleware('api')
 
         Route::post('/add-cart', [CartController::class, 'addCart']);
 
-        Route::post('register', [AuthController::class, 'register']);
+        Route::post('/register', [AuthController::class, 'register']);
 
         Route::post('/login', [AuthController::class, 'login']);
+
+        Route::get('/session', [AuthController::class, 'getSession']);
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('/user', [AuthController::class, 'user']);

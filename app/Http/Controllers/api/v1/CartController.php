@@ -4,62 +4,49 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Models\Cart;
+use App\Http\Requests\AddCartRequest;
 use App\Http\Requests\CartRequest;
+use App\Http\Resources\CartProductListResource;
+use App\Models\CartProduct;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends ResponseController
 {
-  public function index()
+  public function index(CartRequest $request)
   {
-    $cart = Cart::where(['session_id' => '0909'])
-      ->first();
-
-    return $this->sendResponse($cart->cartProducts, 'cart products');
-  }
-
-  public function addCart(CartRequest $request)
-  {
-    $requestData = $request->validated();
-
-    $cart = Cart::where(['session_id' => $requestData['session_id']])
-      ->first();
-
-    if (!$cart) {
-      $cart =  new Cart([
-        'session_id' => $requestData['session_id'],
-        'user_id' => $requestData['user_id'] ?? null,
-      ]);
-
-      $cart->saveOrFail();
+    if ($request->has('session_id')) {
+      $builder = CartProduct::where(['session_id' => $request->input('session_id')]);
+    } else {
+      $builder = CartProduct::where(['user_id' => $request->input('user_id')]);
     }
 
+    return $this->sendResponse(new CartProductListResource($builder), 'cart products');
+  }
 
-    return $this->sendResponse($cart->cartProducts()->create($requestData), 'added');
+  public function addCart(AddCartRequest $request)
+  {
+    $cartProduct = new CartProduct($request->all());
+
+    return $this->sendResponse($cartProduct->saveOrFail(), 'added');
   }
 
   public function store()
   {
-
   }
 
   public function update()
   {
-
   }
 
   public function edit()
   {
-
   }
 
   public function show($id)
   {
-
   }
 
   public function destroy($id)
   {
-
   }
 }
-

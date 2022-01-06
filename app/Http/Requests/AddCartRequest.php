@@ -19,7 +19,7 @@ class AddCartRequest extends FormRequest
             'session_id' => [
                 'nullable',
                 'string',
-                'required_if:user_id,===,null'
+                'required_if:user_id,===,null',
             ],
             'user_id' => [
                 'nullable',

@@ -12,8 +12,6 @@ class CartProductResource extends JsonResource
     {
         return array_merge(
             $this->only(
-                'session_id',
-                'user_id',
                 'id',
                 'count',
                 'engraving',
@@ -22,7 +20,22 @@ class CartProductResource extends JsonResource
             [
                 'size' => $this->size->name,
                 'color' => $this->color->name,
+                'name' => $this->product->name,
+                'price' => $this->getPrice(),
+                'colorList' => new ColorCollection($this->product->colors),
+                'sizeList' => new SizeCollection($this->product->sizes),
             ],
         );
+    }
+
+    public function getPrice()
+    {
+        $discountPrice = $this->product->getDiscountPrice();
+
+        if (!$discountPrice) {
+            return $this->product->price;
+        }
+
+        return $discountPrice;
     }
 }

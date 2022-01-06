@@ -53,7 +53,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        if (!Auth::user()->hasAnyRole()) {
+        if (Auth::user()->hasRole('user')) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

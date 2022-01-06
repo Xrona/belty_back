@@ -7,6 +7,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Models\User;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
 use Auth;
 use Hash;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,17 @@ class AuthController extends ResponseController
             'email' => $requestData['email'],
             'password' => Hash::make($requestData['password']),
         ]);
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $user = Auth::user();
+
+            $user->assignRole('user');
+
+            return $this->sendResponse([
+                'token' => $user->createToken('token')->plainTextToken,
+                'user' => new UserResource($user),
+            ], 'registered');
+        }
     }
 
     public function login(LoginRequest $request)
@@ -36,17 +48,30 @@ class AuthController extends ResponseController
 
         $user =  Auth::user();
 
-        return $this->sendResponse($user->createToken('token')->plainTextToken, 'login');
+        return $this->sendResponse([
+            'token' => $user->createToken('token')->plainTextToken,
+            'user' => new UserResource($user),
+        ], 'login');
     }
 
     public function user()
     {
-        return Auth::user();
+        return $this->sendResponse(
+            new UserResource(Auth::user()),
+            'user',
+        );
     }
 
 
     public function getSession()
     {
         return session()->getId();
+    }
+
+    public function logout()
+    {
+        Auth::user()->logout();
+
+        return $this->sendResponse('', 'logout');
     }
 }

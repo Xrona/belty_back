@@ -17,11 +17,6 @@ class CartRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'user_id' => [
-                'int',
-                'nullable',
-                Rule::exists((new User)->getTable(), 'id'),
-            ]
         ];
     }
 }

@@ -45,4 +45,9 @@ class CartProduct extends Model
     {
         return $this->belongsTo(Size::class);
     }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

@@ -31,9 +31,13 @@ Route::middleware('api')
 
         Route::resource('/countries', CountryController::class);
 
-        Route::resource('/cart', CartController::class);
+        Route::get('/get-cart-products', [CartController::class, 'getCartProducts']);
 
         Route::post('/add-cart', [CartController::class, 'addCart']);
+
+        Route::get('/remove-cart/$id', [CartController::class, 'removeCart']);
+
+        Route::post('/change-cart-product/$id', [CartController::class, 'changeCartProduct']);
 
         Route::post('/register', [AuthController::class, 'register']);
 
@@ -43,5 +47,6 @@ Route::middleware('api')
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('/user', [AuthController::class, 'user']);
+            Route::get('/logout', [AuthController::class, 'logout']);
         });
     });

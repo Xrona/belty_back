@@ -21,21 +21,10 @@ class CartProductResource extends JsonResource
                 'size' => $this->size->name,
                 'color' => $this->color->name,
                 'name' => $this->product->name,
-                'price' => $this->getPrice(),
+                'price' => $this->price(),
                 'colorList' => new ColorCollection($this->product->colors),
                 'sizeList' => new SizeCollection($this->product->sizes),
             ],
         );
-    }
-
-    public function getPrice()
-    {
-        $discountPrice = $this->product->getDiscountPrice();
-
-        if (!$discountPrice) {
-            return $this->product->price;
-        }
-
-        return $discountPrice;
     }
 }

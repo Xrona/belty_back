@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\api\v1\AuthController;
-use App\Http\Controllers\api\v1\CartController;
-use App\Http\Controllers\api\v1\CategoryController;
-use App\Http\Controllers\api\v1\ColorController;
-use App\Http\Controllers\api\v1\CountryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\v1\AuthController;
+use App\Http\Controllers\api\v1\CartController;
+use App\Http\Controllers\api\v1\ColorController;
+use App\Http\Controllers\api\v1\OrderController;
+use App\Http\Controllers\api\v1\CountryController;
 use App\Http\Controllers\api\v1\ProductController;
+use App\Http\Controllers\api\v1\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,8 @@ Route::middleware('api')
         Route::post('/login', [AuthController::class, 'login']);
 
         Route::get('/session', [AuthController::class, 'getSession']);
+
+        Route::post('/order', [OrderController::class, 'order']);
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('/user', [AuthController::class, 'user']);

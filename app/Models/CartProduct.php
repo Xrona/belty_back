@@ -31,6 +31,17 @@ class CartProduct extends Model
         'updated_at',
     ];
 
+    public function price()
+    {
+        $cartProduct = $this->product->getDiscountPrice();
+
+        if ($cartProduct) {
+            return $cartProduct;
+        }
+
+        return $this->product->price;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

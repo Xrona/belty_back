@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
+use App\Models\CartProduct;
 use Auth;
 use Hash;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,16 @@ class AuthController extends ResponseController
 
             $user->assignRole('user');
 
+            if ($request->has('session')) {
+                $cartProducts = CartProduct::where(['session_id' => $request->input('session')])
+                    ->andWhereNull('user_id')
+                    ->get();
+
+                foreach ($cartProducts as $cartProduct) {
+                    $cartProduct->update(['user_id' => $user->id]);
+                }
+            }
+
             return $this->sendResponse([
                 'token' => $user->createToken('token')->plainTextToken,
                 'user' => new UserResource($user),
@@ -47,6 +58,16 @@ class AuthController extends ResponseController
         }
 
         $user =  Auth::user();
+
+        if ($request->has('session')) {
+            $cartProducts = CartProduct::where(['session_id' => $request->input('session')])
+                ->whereNull('user_id')
+                ->get();
+
+            foreach ($cartProducts as $cartProduct) {
+                $cartProduct->update(['user_id' => $user->id]);
+            }
+        }
 
         return $this->sendResponse([
             'token' => $user->createToken('token')->plainTextToken,
@@ -70,7 +91,7 @@ class AuthController extends ResponseController
 
     public function logout()
     {
-        Auth::user()->logout();
+        Auth::user()->tokens()->delete();
 
         return $this->sendResponse('', 'logout');
     }

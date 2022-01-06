@@ -4,12 +4,15 @@
 namespace App\Http\Controllers\Backend;
 
 
-use App\Enums\OrderStatusEnum;
-use App\Http\Controllers\Controller;
+use App\Models\Size;
 use App\Models\Color;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Size;
+use Illuminate\Http\Request;
+use App\Enums\OrderStatusEnum;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\BackendOrderRequest;
+use App\Http\Requests\OrderRequest;
 
 class OrderController extends  Controller
 {
@@ -38,13 +41,31 @@ class OrderController extends  Controller
         ]));
     }
 
-    public function update()
+    public function update(BackendOrderRequest $request, $id)
     {
+        $requestData = $request->only(
+            'surname',
+            'name',
+            'email',
+            'phone',
+            'post_index',
+            'city',
+            'street',
+            'house',
+            'flat',
+        );
 
+        $products = $request->get('products');
+
+
+
+        return redirect('orders')->with('flash_message', 'Product updated!');
     }
 
-    public function destroy()
+    public function destroy($id)
     {
+        Order::destroy($id);
 
+        return redirect('orders')->with('flash_message', 'Order deleted!');
     }
 }

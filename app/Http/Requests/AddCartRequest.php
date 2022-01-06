@@ -19,11 +19,6 @@ class AddCartRequest extends FormRequest
             'session_id' => [
                 'nullable',
                 'string',
-                'required_if:user_id,===,null',
-            ],
-            'user_id' => [
-                'nullable',
-                Rule::exists((new User)->getTable(), 'id'),
             ],
             'product_id' => [
                 'int',

@@ -2,11 +2,9 @@
     <div class="col-sm-2">
         <div class="form-group mt-4">
             <label>Status</label>
-            <select class="select2" style="width: 100%;" name="status"
-            >
+            <select class="select2" style="width: 100%;" name="status">
                 @foreach($statusList as $key => $item)
-                    <option
-                        value="{{$key}}" {{$order->status === $key ? 'selected' : ''}}>{{$item}}</option>
+                <option value="{{$key}}" {{$order->status === $key ? 'selected' : ''}}>{{$item}}</option>
                 @endforeach
             </select>
             {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
@@ -34,7 +32,7 @@
             </div>
             <div class="form-group {{ $errors->has('phone') ? 'has-error' : ''}}">
                 <label for="phone" class="control-label">phone</label>
-                <input class="form-control" name="surname" type="text" value="{{ $order?->phone ?? ''}}">
+                <input class="form-control" name="phone" type="text" value="{{ $order?->phone ?? ''}}">
                 {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
             </div>
             <div class="form-group {{ $errors->has('post_index') ? 'has-error' : ''}}">
@@ -75,80 +73,82 @@
     <div class="col-sm-7 offset-sm-1 col-12">
         <div class="border p-3">
             <h2>Products</h2>
-            @foreach($order->orderProducts as $product)
-                <div class="border p-3 mb-4">
-                    <x-select2 name="product_id" :list="$products" :currentValue="$product->product_id" label="Product"/>
-                    {!! $errors->first('product_id', '<p class="help-block">:message</p>') !!}
-                    <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
-                        <label for="product_name" class="control-label">Product name</label>
-                        <input class="form-control" name="product_name" type="text" value="{{ $product?->product_name ?? ''}}">
-                        {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
-                    </div>
-                    <div class="form-group {{ $errors->has('buy_price') ? 'has-error' : ''}}">
-                        <label for="buy_price" class="control-label">Buy price</label>
-                        <input class="form-control" name="buy_price" type="text" value="{{ $product?->buy_price ?? ''}}">
-                        {!! $errors->first('buy_price', '<p class="help-block">:message</p>') !!}
-                    </div>
-                    <div class="form-group {{ $errors->has('count') ? 'has-error' : ''}}">
-                        <label for="count" class="control-label">Count</label>
-                        <input class="form-control" name="count" type="text" value="{{ $product?->count ?? ''}}">
-                        {!! $errors->first('count', '<p class="help-block">:message</p>') !!}
-                    </div>
-                    <label for="color">Color</label>
-                    <div class="form-group {{ $errors->has('color') ? 'has-error' : ''}}">
-                        <select name="color" class="select2 w-25">
-                            @if($product->product)
-                                @foreach($product->product->colors as $color)
-                                    <option value="{{$color->name}}">
-
-                                    </option>
-                                @endforeach
-                            @else
-                                <option value="1">1</option>
-                                @foreach($colors as $color)
-                                    <option value="{{$color['value']}}">
-                                        {{--                                    //TODO list--}}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
-                        {!! $errors->first('color', '<p class="help-block">:message</p>') !!}
-                    </div>
-                    <label for="size">Size</label>
-                    <div class="form-group {{ $errors->has('size') ? 'has-error' : ''}}">
-                        <select name="size" class="select2 w-25">
-                            @if($product->product)
-                                @foreach($product->product->sizes as $size)
-                                    <option value="{{$size->name}}">
-                                        {{$size->name}}
-                                    </option>
-                                @endforeach
-                            @else
-                                <option value="1">1</option>
-                                @foreach($sizes as $size)
-                                    <option value="{{$size['name']}}">
-                                        {{$size['name']}}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
-                        {!! $errors->first('size', '<p class="help-block">:message</p>') !!}
-
-                    </div>
-                    <label for="is_gift">Is gift</label>
-                    <div class="form-group {{ $errors->has('is_gift') ? 'has-error' : ''}}">
-                        <input type="checkbox" name="is_gift" {{$product->is_gift ? 'checked' : ''}}>
-                        {!! $errors->first('is_gift', '<p class="help-block">:message</p>') !!}
-                    </div>
-                    <div class="form-group {{ $errors->has('engraving') ? 'has-error' : ''}}">
-                        <label for="engraving" class="control-label">Engraving</label>
-                        <input class="form-control" name="engraving" type="text" value="{{ $product?->engraving ?? ''}}">
-                        {!! $errors->first('engraving', '<p class="help-block">:message</p>') !!}
-                    </div>
+            @foreach($order->orderProducts as $key => $product)
+            <div class="border p-3 mb-4">
+                <x-select2 name="product_id" :list="$products" :currentValue="$product->product_id" label="Product" />
+                {!! $errors->first('product_id', '<p class="help-block">:message</p>') !!}
+                <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
+                    <label for="product_name" class="control-label">Product name</label>
+                    <input class="form-control" name="products[{{$key}}][product_name]" type="text" value="{{ $product?->product_name ?? ''}}">
+                    {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
                 </div>
+                <div class="form-group {{ $errors->has('buy_price') ? 'has-error' : ''}}">
+                    <label for="buy_price" class="control-label">Buy price</label>
+                    <input class="form-control" name="products[{{$key}}][buy_price]" type="text" value="{{ $product?->buy_price ?? ''}}">
+                    {!! $errors->first('buy_price', '<p class="help-block">:message</p>') !!}
+                </div>
+                <div class="form-group {{ $errors->has('count') ? 'has-error' : ''}}">
+                    <label for="count" class="control-label">Count</label>
+                    <input class="form-control" name="products[{{$key}}][count]" type="text" value="{{ $product?->count ?? ''}}">
+                    {!! $errors->first('count', '<p class="help-block">:message</p>') !!}
+                </div>
+                <label for="color">Color</label>
+                <div class="form-group {{ $errors->has('color') ? 'has-error' : ''}}">
+                    <select name="products[{{$key}}][color]" class="select2 w-25">
+                        @if($product->product)
+                        @foreach($product->product->colors as $color)
+                        <option value="{{$color->name}}">
+
+                        </option>
+                        @endforeach
+                        @else
+                        <option value="1">1</option>
+                        @foreach($colors as $color)
+                        <option value="{{$color['value']}}">
+                            {{-- //TODO list--}}
+                        </option>
+                        @endforeach
+                        @endif
+                    </select>
+                    {!! $errors->first('color', '<p class="help-block">:message</p>') !!}
+                </div>
+                <label for="size">Size</label>
+                <div class="form-group {{ $errors->has('size') ? 'has-error' : ''}}">
+                    <select name="products[{{$key}}][size]" class="select2 w-25">
+                        @if($product->product)
+                        @foreach($product->product->sizes as $size)
+                        <option value="{{$size->name}}">
+                            {{$size->name}}
+                        </option>
+                        @endforeach
+                        @else
+                        <option value="1">1</option>
+                        @foreach($sizes as $size)
+                        <option value="{{$size['name']}}">
+                            {{$size['name']}}
+                        </option>
+                        @endforeach
+                        @endif
+                    </select>
+                    {!! $errors->first('size', '<p class="help-block">:message</p>') !!}
+
+                </div>
+                <label for="is_gift">Is gift</label>
+                <div class="form-group {{ $errors->has('is_gift') ? 'has-error' : ''}}">
+                    <input type="checkbox" name="products[{{$key}}][is_gift]" {{$product->is_gift ? 'checked' : ''}}>
+                    {!! $errors->first('is_gift', '<p class="help-block">:message</p>') !!}
+                </div>
+                <div class="form-group {{ $errors->has('engraving') ? 'has-error' : ''}}">
+                    <label for="engraving" class="control-label">Engraving</label>
+                    <input class="form-control" name="products[{{$key}}][engraving]" type="text" value="{{ $product?->engraving ?? ''}}">
+                    {!! $errors->first('engraving', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
             @endforeach
         </div>
     </div>
 </div>
 
-
+<div class="form-group">
+    <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+</div>

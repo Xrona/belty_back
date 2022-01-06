@@ -26,7 +26,14 @@ class AuthRequest extends FormRequest
                 'required_with:password_confirm',
                 'same:password_confirm',
             ],
-            'password_confirm' => 'min:6',
+            'password_confirm' => [
+                'string',
+                'min:6',
+            ],
+            'session' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

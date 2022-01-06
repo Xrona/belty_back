@@ -20,6 +20,10 @@ class LoginRequest extends FormRequest
                 'string',
                 'min:6',
             ],
+            'session' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

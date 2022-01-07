@@ -57,9 +57,17 @@ class OrderController extends  Controller
 
         $products = $request->get('products');
 
+        $order = Order::findOrFail($id);
 
+        if ($order->update($requestData)) {
+            $order->orderProducts()->delete();
 
-        return redirect('orders')->with('flash_message', 'Product updated!');
+            foreach ($products as $product) {
+                $order->orderProducts()->create($product);
+            }
+
+            return redirect('orders')->with('flash_message', 'Product updated!');
+        }
     }
 
     public function destroy($id)

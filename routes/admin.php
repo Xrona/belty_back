@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ColorController;
+use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\DiscountController;
 use App\Http\Controllers\Backend\MaterialController;
@@ -62,4 +63,8 @@ Route::name('admin.')
         Route::post('/delete-image', [ImageController::class, 'delete']);
 
         Route::resource('/orders', OrderController::class);
+
+        Route::get('/comments', [CommentController::class, 'index']);
+
+        Route::get('/comments/{id}', [CommentController::class, 'show']);
     });

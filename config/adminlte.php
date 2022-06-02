@@ -260,14 +260,19 @@ return [
             'icon'        => 'fas fa-file',
         ],
         [
-            'text'        => 'sizes',
-            'url'         => '/sizes',
-            'icon'        => 'fas fa-file',
+            'text' => 'sizes',
+            'url' => '/sizes',
+            'icon' => 'fas fa-file',
         ],
         [
-            'text'        => 'users',
-            'url'         => '/user',
-            'icon'        => 'fas fa-file',
+            'text' => 'users',
+            'url' => '/user',
+            'icon' => 'fas fa-file',
+        ],
+        [
+            'text' => 'comments',
+            'url' => '/comments',
+            'icon' => 'fas fa-file',
         ],
     ],
 

@@ -73,7 +73,9 @@
                                         height: 25px;
                                         background-color: {{$color->name}};
                                         border: 3px solid white;
-                                        "></div>
+                                        "
+                                        title="{{$color->label ?? 'not set'}}"
+                                    ></div>
                                 @endforeach
                             </div>
                         </td>

@@ -24,6 +24,7 @@
                     <td>{{$order->id}}</td>
                     <td>
                         <div class="order-status status-{{$order->status}}"
+                             id="order{{$order->id}}"
                         >
                             {{$order->getStatus()}}
                         </div>
@@ -50,8 +51,17 @@
                         >
                             Products
                         </button>
-                        <button class="btn btn-warning btn-sm">Change status</button>
-                        <a href="{{ url('/orders/' . $order->id . '/edit') }}" title="Edit User" class="btn btn-primary btn-sm">
+                        <button
+                            class="btn btn-warning btn-sm change-status-button"
+                            data-status-id="{{$order->status}}"
+                            data-order-id="{{$order->id}}"
+                            data-toggle="modal"
+                            data-target="#orderStatusModal"
+                        >
+                            Change status
+                        </button>
+                        <a href="{{ url('/orders/' . $order->id . '/edit') }}" title="Edit User"
+                           class="btn btn-primary btn-sm">
                             <i class="fa fa-pencil-square-o"
                                aria-hidden="true"></i> Edit
                         </a>
@@ -161,4 +171,30 @@
         </table>
     </div>
 
+    <div class="modal fade" id="orderStatusModal" tabindex="-1" aria-labelledby="orderStatusModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderStatusModalLabel">Change status</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select class="select2">
+                            @foreach(\App\Enums\OrderStatusEnum::getList() as $key => $status)
+                                <option value="{{$key}}">{{$status}}</option>
+                            @endforeach
+                        </select>
+                        <div class="spinner d-none">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop

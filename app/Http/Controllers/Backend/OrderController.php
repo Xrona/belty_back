@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Backend;
 
 
+use App\Http\Requests\OrderStatusRequest;
 use App\Models\Size;
 use App\Models\Color;
 use App\Models\Order;
@@ -18,7 +19,7 @@ class OrderController extends  Controller
 {
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::orderBy('status')->get();
 
         return view('admin/orders/index', compact(['orders',]));
     }
@@ -30,7 +31,6 @@ class OrderController extends  Controller
         $products = Product::all()->toArray();
         $colors = Color::all()->toArray();
         $sizes = Size::all()->toArray();
-
 
         return view('admin/orders/edit', compact([
             'order',
@@ -68,6 +68,19 @@ class OrderController extends  Controller
 
             return redirect('orders')->with('flash_message', 'Product updated!');
         }
+    }
+
+    public  function changeStatus($id, OrderStatusRequest $request): array|bool
+    {
+        $order = Order::findOrFail($id);
+
+        if($order->update($request->only('status'))) {
+            return [
+                'status' => $order->getStatus(),
+            ];
+        }
+
+        return  false;
     }
 
     public function destroy($id)

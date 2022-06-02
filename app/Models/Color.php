@@ -17,6 +17,7 @@ class Color extends Model
 
   protected $fillable = [
       'name',
+      'label',
   ];
 
   protected $guarded = [

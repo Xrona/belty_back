@@ -17,6 +17,21 @@ $(function () {
     checkbox.toggleAttribute('checked')
   })
 
+  $('.color-radio-body').on('click', function (e) {
+    let radio = $(this).next('input')[0]
+
+    if (!radio.hasAttribute('checked')) {
+      $('.color-radio-body').each(function () {
+        $(this).removeClass('color-active')
+        let radio = $(this).next('input')[0]
+        radio.removeAttribute('checked')
+      })
+
+      $(this).toggleClass('color-active')
+      radio.toggleAttribute('checked')
+    }
+  })
+
   $('.enable-discount').on('click', function (e) {
     let id = $(this).attr('data-enable-product-id')
 
@@ -37,7 +52,7 @@ $(function () {
     $.ajax({
       url: `/products/status/${id}`,
       type: 'GET',
-      success: function(data) {
+      success: function (data) {
         if (data) {
           $('.toast-status').toast('show')
         }
@@ -51,7 +66,7 @@ $(function () {
     $.ajax({
       url: `/products/bestseller/${id}`,
       type: 'GET',
-      success: function(data) {
+      success: function (data) {
         if (data) {
           $('.toast-bestseller').toast('show')
         }
@@ -215,4 +230,56 @@ $(function () {
       }
     )
   }
+
+  let statusId
+  let id
+
+  $('.change-status-button').on('click', function () {
+    statusId = $(this).attr('data-status-id')
+    id = $(this).attr('data-order-id')
+
+    let select = $('#orderStatusModal select')
+
+    select.val(statusId)
+    select.trigger('change')
+  })
+
+  $('#orderStatusModal select').change(function () {
+    if (statusId !== $(this).val()) {
+      let status = $(this).val()
+
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      })
+
+      $.ajax({
+        url: `/orders/change-status/${id}`,
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+          'status': status,
+        },
+        beforeSend: function () {
+          $('#orderStatusModal .spinner').toggleClass('d-none')
+        },
+        success: function (data) {
+          $('#orderStatusModal').modal('hide')
+
+          if (data) {
+            $(`.change-status-button[data-order-id=${id}]`)
+              .attr('data-status-id', status)
+
+            $(`#order${id}`).html(data['status'])
+              .removeClass(`status-${statusId}`)
+              .addClass(`status-${status}`)
+          }
+        },
+        complete: function () {
+          $('#orderStatusModal .spinner').toggleClass('d-none')
+        }
+      })
+    }
+  })
 })

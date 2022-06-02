@@ -40,3 +40,16 @@
     border-color: #6c757d;
 }
 
+#orderStatusModal .form-group {
+    display: flex;
+    align-items: center;
+}
+
+#orderStatusModal .select2 {
+    width: 350px;
+    display: block;
+}
+
+#orderStatusModal .spinner {
+    margin-left: 10px;
+}

@@ -62,4 +62,6 @@ Route::name('admin.')
         Route::post('/delete-image', [ImageController::class, 'delete']);
 
         Route::resource('/orders', OrderController::class);
+
+        Route::post('/orders/change-status/{id}', [OrderController::class, 'changeStatus']);
     });

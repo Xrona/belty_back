@@ -6,7 +6,8 @@
                 <div class="mr-2">
                     <div
                            class="color-body {{in_array($item['id'], $currentValues ?? []) ? 'color-active' : ''}}"
-                           style="width: 45px; height: 45px; background-color: {{$item['name']}}"></div>
+                           title="{{$item['label'] ?? 'not set'}}"
+                           style="width: 45px; height: 45px; background-color: {{$item['name']}}; cursor: pointer"></div>
                     <input type="checkbox" name="{{$name}}[]"
                            value="{{$item['id']}}"
                            {{in_array($item['id'], $currentValues ?? []) ? 'checked' : ''}}

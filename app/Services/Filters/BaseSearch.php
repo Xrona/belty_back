@@ -27,7 +27,6 @@ trait BaseSearch
         /** @var Eloquent $eloquent */
         $eloquent = $this->getObject();
 
-        var_dump($request, $eloquent); die;
         return $this->applyObjectFromRequest($request, $eloquent->newQuery());
     }
 

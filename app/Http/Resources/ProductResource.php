@@ -31,6 +31,7 @@ class ProductResource extends JsonResource
                 'price' => $this->checkDiscountPrice(),
                 'discount' => $this->getDiscount(),
                 'image' => new ImageResource($this->productImages->first()),
+                'bestseller' => $this->bestseller,
             ]
         );
     }

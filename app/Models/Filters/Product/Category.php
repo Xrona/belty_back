@@ -13,6 +13,6 @@ class Category implements Filterable
     public static function apply(Builder $builder, mixed $value): Builder
     {
         return $builder
-            ->where(['categories.id' => $value]);
+            ->where(['products.category_id' => $value]);
     }
 }

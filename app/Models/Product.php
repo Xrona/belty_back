@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Http\Requests\ProductsSearchRequest;
 use App\Models\Filters\Product\ProductSearch;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -41,13 +42,14 @@ class Product extends Model
         'updated_at',
     ];
 
-    public static function search(Request $request)
+    public static function search(Request $request): Builder
     {
         return (new ProductSearch())->apply($request);
     }
 
 
-    public function getDiscountPrice() {
+    public function getDiscountPrice() : float
+    {
         if (is_null($this->discount_id)) {
             return  0;
         }

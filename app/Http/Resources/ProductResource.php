@@ -6,6 +6,7 @@ namespace App\Http\Resources;
 
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * Class ProductResource
@@ -17,7 +18,7 @@ class ProductResource extends JsonResource
     /**
      * @inheritDoc
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return array_merge(
             $this->only(
@@ -34,7 +35,7 @@ class ProductResource extends JsonResource
         );
     }
 
-    public function checkDiscountPrice()
+    public function checkDiscountPrice() : float|string
     {
         if ($this->enable_discount && $this->discount_id) {
             return $this->getDiscountPrice();
@@ -43,13 +44,13 @@ class ProductResource extends JsonResource
         }
     }
 
-    public function getDiscount()
+    public function getDiscount(): ?string
     {
         if ($this->enable_discount && $this->discount_id) {
             if ($this->discount->is_percent) {
-                return "{$this->discount->value}%";
+                return "{$this->discount->value} %";
             } else {
-                return  "{$this->discount->value}р.";
+                return  "{$this->discount->value} BYN";
             }
         }
 

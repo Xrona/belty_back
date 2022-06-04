@@ -36,7 +36,15 @@ class ProductController extends ResponseController
 
     public function show($id): JsonResponse
     {
-        $product = Product::findOrFail($id);
+        $product = Product::where('id', $id)->first();
+
+        if (!$product) {
+            return $this->sendError(
+                'Product not found',
+                [],
+                404,
+            );
+        }
 
         return $this->sendResponse(new OneProductResource($product), 'one product');
     }

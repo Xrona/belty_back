@@ -21,12 +21,12 @@ class DiscountController extends Controller
         return view('admin/discounts/index', compact('discounts'));
     }
 
-    public function productSearch(ProductsSearchRequest $request)
+    public function productSearch(ProductsSearchRequest $request): array
     {
 
         if ($request->input('search') && $request->input('search') !== '') {
             return [
-                'products' => Product::search($request)->toArray()
+                'products' => Product::search($request)->get()->toArray()
             ];
         } else {
             return [

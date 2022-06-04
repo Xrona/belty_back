@@ -1,6 +1,6 @@
 <div class="form-group {{ $errors->has('value') ? 'has-error' : ''}}">
     <label for="value" class="control-label">discount value</label>
-    <input class="form-control" name="value" type="text" id="value" value="{{ $discount->value ?? ''}}">
+    <input class="form-control" name="value" type="text" id="value" value="{{ isset($discount?->value) ? $discount->value : ''}}">
     {!! $errors->first('value', '<p class="help-block">:message</p>') !!}
 </div>
 
@@ -26,13 +26,19 @@
                         <div class="card-body">
                             <div class="product-discount d-flex justify-content-between align-items-center">
                                 <div>{{ $loop->iteration }}</div>
-                                <div class="name">{{$product->name}}</div>
-                                <div class="price">{{$product->price}}</div>
+                                <div class="name text-left">
+                                    <span class="text-bold">Название: </span>
+                                    <span>{{$product->name}}</span>
+                                </div>
+                                <div class="price text-left">
+                                    <span class="text-bold">Цена: </span>
+                                    <span>{{$product->price}}</span>
+                                </div>
                                 <input
                                     type="checkbox"
                                     name="products[]"
                                     value="{{$product->id}}"
-                                    {{$discount && $discount->id === $product->discount_id ? 'checked' : '' }}
+                                    {{isset($discount) && $discount?->id === $product->discount_id ? 'checked' : '' }}
                                 >
                             </div>
                         </div>

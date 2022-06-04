@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Models\Product;
+use App\Services\traits\ProductPriceTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\Pure;
 
@@ -15,6 +16,7 @@ use JetBrains\PhpStorm\Pure;
  */
 class ProductResource extends JsonResource
 {
+    use ProductPriceTrait;
     /**
      * @inheritDoc
      */
@@ -28,33 +30,11 @@ class ProductResource extends JsonResource
             ),
             [
                 'old_price' => $this->price,
-                'price' => $this->checkDiscountPrice(),
-                'discount' => $this->getDiscount(),
+                'price' => $this->checkDiscountPrice($this),
+                'discount' => $this->getDiscount($this),
                 'image' => new ImageResource($this->productImages->first()),
                 'bestseller' => $this->bestseller,
             ]
         );
-    }
-
-    public function checkDiscountPrice() : float|string
-    {
-        if ($this->enable_discount && $this->discount_id) {
-            return $this->getDiscountPrice();
-        } else {
-            return $this->price;
-        }
-    }
-
-    public function getDiscount(): ?string
-    {
-        if ($this->enable_discount && $this->discount_id) {
-            if ($this->discount->is_percent) {
-                return "{$this->discount->value} %";
-            } else {
-                return  "{$this->discount->value} BYN";
-            }
-        }
-
-        return null;
     }
 }

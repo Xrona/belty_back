@@ -1,5 +1,5 @@
 <?php
-if (!isset($color) {
+if (!isset($color)) {
     $color = null;
 }
 ?>

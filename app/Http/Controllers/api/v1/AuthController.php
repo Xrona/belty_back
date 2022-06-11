@@ -11,6 +11,7 @@ use App\Http\Resources\UserResource;
 use App\Models\CartProduct;
 use Auth;
 use Hash;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends ResponseController
@@ -75,7 +76,7 @@ class AuthController extends ResponseController
         ], 'login');
     }
 
-    public function user()
+    public function user(): JsonResponse
     {
         return $this->sendResponse(
             new UserResource(Auth::user()),
@@ -84,12 +85,24 @@ class AuthController extends ResponseController
     }
 
 
-    public function getSession()
+    public function getSession(): JsonResponse
     {
-        return session()->getId();
+        $sessionId = session()->getId();
+
+        if($sessionId) {
+            return $this->sendResponse(
+                $sessionId,
+                'sessionId'
+            );
+        }
+
+        return $this->sendError(
+            [],
+            'error with get session'
+        );
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
         Auth::user()->tokens()->delete();
 

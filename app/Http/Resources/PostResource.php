@@ -18,6 +18,7 @@ class PostResource extends  JsonResource
                 'content',
             ),
             [
+                'date' => $this->updated_at,
                 'image' => $this->url,
             ]
         );

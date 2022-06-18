@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\DiscountController;
 use App\Http\Controllers\Backend\MaterialController;
 use App\Http\Controllers\Backend\OrderController;
+use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SiteController;
 use App\Http\Controllers\Backend\SizeController;
@@ -39,6 +40,8 @@ Route::name('admin.')
         Route::get('/products/status/{id}', [ProductController::class, 'changeStatus']);
 
         Route::get('/products/bestseller/{id}', [ProductController::class, 'changeBestseller']);
+
+        Route::resource('/posts', PostController::class);
 
         Route::resource('/categories', CategoryController::class);
 

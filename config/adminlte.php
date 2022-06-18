@@ -230,6 +230,11 @@ return [
             'icon'        => 'fas fa-file',
         ],
         [
+            'text'        => 'posts',
+            'url'         => '/posts',
+            'icon'        => 'fas fa-file',
+        ],
+        [
             'text'        => 'products',
             'url'         => '/products',
             'icon'        => 'fas fa-file',

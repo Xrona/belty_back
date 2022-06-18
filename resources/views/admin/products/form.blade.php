@@ -77,7 +77,7 @@
 @endif
 
 <label>Images</label>
-<ul id="image-area">
+<ul id="image-area" class="product-images">
     @if($item?->productImages)
         @foreach($item?->productImages as $image)
             <li class="image" style="background-image: url({{$image->url}})" data-image-id="{{$image->id}}"

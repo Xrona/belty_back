@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\AuthController;
@@ -25,6 +26,8 @@ Route::middleware('api')
     ->name('api.v1.')
     ->group(function () {
         Route::resource('/products', ProductController::class);
+
+        Route::get('/blog', [PostController::class, 'index']);
 
         Route::resource('/categories', CategoryController::class);
 

@@ -29,7 +29,7 @@ class CartController extends ResponseController
         return $this->sendResponse(new CartProductListResource($builder), 'cart products');
     }
 
-    public function addCart(AddCartRequest $request)
+    public function addCart(AddCartRequest $request): JsonResponse
     {
         if (!$request->has('session_id')) {
             return $this->sendError([], 'not session id');
@@ -40,14 +40,16 @@ class CartController extends ResponseController
         return $this->sendResponse($cartProduct->saveOrFail(), 'added');
     }
 
-    public function removeCart($id)
+    public function removeCart($id): JsonResponse
     {
         if (CartProduct::destroy($id)) {
             return $this->sendResponse(true, 'deleted');
         }
+
+        return $this->sendError([],'product is not found' );
     }
 
-    public function changeCount($id, ChangeCartProductRequest $request)
+    public function changeCount($id, ChangeCartProductRequest $request): JsonResponse
     {
         $requestData = $request->all();
         $cartProduct = CartProduct::findOrFail($id);
@@ -59,5 +61,17 @@ class CartController extends ResponseController
         }
 
         return $this->sendResponse(true, 'cahnged');
+    }
+
+    public function updateProduct($id, ChangeCartProductRequest $request): JsonResponse
+    {
+        $requestData = $request->all();
+        $cartProduct = CartProduct::findOrFail($id);
+
+        if ($cartProduct->update($requestData)) {
+            return $this->sendResponse(true, 'product updated');
+        }
+
+        return $this->sendError([], 'product not found');
     }
 }

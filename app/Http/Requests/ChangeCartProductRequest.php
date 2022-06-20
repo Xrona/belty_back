@@ -29,7 +29,7 @@ class ChangeCartProductRequest extends FormRequest
                 'nullable',
                 Rule::exists((new Size)->getTable(), 'id'),
             ],
-            'egraving' => [
+            'engraving' => [
                 'nullable',
                 'string',
             ],

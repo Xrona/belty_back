@@ -15,15 +15,16 @@ class CartProductResource extends JsonResource
                 'id',
                 'count',
                 'engraving',
-                'is_gift',
             ),
             [
+                'isGift' => $this->is_gift,
                 'size' => $this->size->name,
                 'color' => $this->color->name,
                 'name' => $this->product->name,
                 'price' => $this->price(),
                 'colorList' => new ColorCollection($this->product->colors),
                 'sizeList' => new SizeCollection($this->product->sizes),
+                'image' => new ImageResource($this->product->productImages->first())
             ],
         );
     }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Models\CartProduct;
 use App\Http\Requests\CartRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AddCartRequest;
 use App\Http\Requests\ChangeCartProductRequest;
@@ -13,7 +14,7 @@ use App\Http\Resources\CartProductListResource;
 
 class CartController extends ResponseController
 {
-    public function getCartProducts(CartRequest $request)
+    public function getCartProducts(CartRequest $request): JsonResponse
     {
         if (auth('sanctum')->user()) {
             $builder = CartProduct::where(['user_id' => auth('sanctum')->user()->id]);

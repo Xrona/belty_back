@@ -24,7 +24,7 @@ class CartProductResource extends JsonResource
                 'price' => $this->price(),
                 'colorList' => new ColorCollection($this->product->colors),
                 'sizeList' => new SizeCollection($this->product->sizes),
-                'image' => new ImageResource($this->product->productImages->first())
+                'imageList' => new ImageCollection($this->product->productImages),
             ],
         );
     }

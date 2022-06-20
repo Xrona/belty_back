@@ -38,9 +38,9 @@ Route::middleware('api')
 
         Route::post('/add-cart', [CartController::class, 'addCart']);
 
-        Route::get('/remove-cart/$id', [CartController::class, 'removeCart']);
+        Route::get('/remove-cart/{id}', [CartController::class, 'removeCart']);
 
-        Route::post('/change-cart-product/$id', [CartController::class, 'changeCartProduct']);
+        Route::post('/change-cart-product/{id}', [CartController::class, 'changeCartProduct']);
 
         Route::post('/register', [AuthController::class, 'register']);
 

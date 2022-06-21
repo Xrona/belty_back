@@ -34,6 +34,8 @@ class ProductResource extends JsonResource
                 'discount' => $this->getDiscount($this),
                 'image' => new ImageResource($this->productImages->first()),
                 'bestseller' => $this->bestseller,
+                'sizes' => new SizeCollection($this->sizes),
+                'colors' => new ColorCollection($this->colors),
             ]
         );
     }

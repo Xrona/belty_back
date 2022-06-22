@@ -12,7 +12,7 @@ use App\Models\CartProduct;
 use Auth;
 use Hash;
 use Illuminate\Http\JsonResponse;
-use Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends ResponseController
@@ -49,7 +49,7 @@ class AuthController extends ResponseController
         }
     }
 
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return $this->sendError(
@@ -59,17 +59,17 @@ class AuthController extends ResponseController
             );
         }
 
-        $user =  Auth::user();
-
-        if ($request->has('session')) {
-            $cartProducts = CartProduct::where(['session_id' => $request->input('session')])
-                ->whereNull('user_id')
-                ->get();
-
-            foreach ($cartProducts as $cartProduct) {
-                $cartProduct->update(['user_id' => $user->id]);
-            }
-        }
+//        $user =  Auth::user();
+//
+//        if ($request->has('session')) {
+//            $cartProducts = CartProduct::where(['session_id' => $request->input('session')])
+//                ->whereNull('user_id')
+//                ->get();
+//
+//            foreach ($cartProducts as $cartProduct) {
+//                $cartProduct->update(['user_id' => $user->id]);
+//            }
+//        }
 
         $request->session()->regenerate();
 

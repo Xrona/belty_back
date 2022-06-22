@@ -11,6 +11,7 @@ use App\Http\Resources\UserResource;
 use App\Models\CartProduct;
 use Auth;
 use Hash;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,17 +50,16 @@ class AuthController extends ResponseController
         }
     }
 
+    /**
+     * @throws AuthenticationException
+     */
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return $this->sendError(
-                'Invalid credentials',
-                [],
-                Response::HTTP_UNAUTHORIZED,
-            );
+            throw new AuthenticationException();
         }
 
-//        $user =  Auth::user();
+        $user =  Auth::user();
 //
 //        if ($request->has('session')) {
 //            $cartProducts = CartProduct::where(['session_id' => $request->input('session')])
@@ -71,7 +71,7 @@ class AuthController extends ResponseController
 //            }
 //        }
 
-        $request->session()->regenerate();
+        return ['token' =>  $user->createToken('token')->plainTextToken];
 
 //        return $this->sendResponse([
 //            'token' => $user->createToken('token')->plainTextToken,

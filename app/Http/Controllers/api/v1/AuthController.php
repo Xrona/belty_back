@@ -70,8 +70,7 @@ class AuthController extends ResponseController
 
         $user = Auth::user();
 
-//        $user->assignRole('user');
-        $user->roles()->attach(3);
+        $user->assignRole('user');
 
         if ($request->has('session')) {
             $cartProducts = CartProduct::where(['session_id' => $request->input('session')])

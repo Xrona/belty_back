@@ -16,41 +16,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends ResponseController
 {
-    public function register(AuthRequest $request)
+    public function __construct()
     {
-        $requestData = $request->validated();
-
-        User::create([
-            'name' => $requestData['name'],
-            'email' => $requestData['email'],
-            'password' => Hash::make($requestData['password']),
-        ]);
-
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $user = Auth::user();
-
-            $user->assignRole('user');
-
-            if ($request->has('session')) {
-                $cartProducts = CartProduct::where(['session_id' => $request->input('session')])
-                    ->andWhereNull('user_id')
-                    ->get();
-
-                foreach ($cartProducts as $cartProduct) {
-                    $cartProduct->update(['user_id' => $user->id]);
-                }
-            }
-
-            return $this->sendResponse([
-                'token' => $user->createToken('token')->plainTextToken,
-                'user' => new UserResource($user),
-            ], 'registered');
-        }
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
     public function login(LoginRequest $request)
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        $credentials = request(['email', 'password']);
+
+
+        if (! $token = auth()->attempt($credentials)) {
             return $this->sendError(
                 'Invalid credentials',
                 [],
@@ -70,10 +46,43 @@ class AuthController extends ResponseController
             }
         }
 
-        return $this->sendResponse([
-            'token' => $user->createToken('token')->plainTextToken,
-            'user' => new UserResource($user),
-        ], 'login');
+        return $this->respondWithToken($token);
+    }
+
+
+    public function register(AuthRequest $request)
+    {
+        $requestData = $request->validated();
+
+        User::create([
+            'name' => $requestData['name'],
+            'email' => $requestData['email'],
+            'password' => Hash::make($requestData['password']),
+        ]);
+
+        if (! $token = auth()->attempt($requestData)) {
+            return $this->sendError(
+                'Invalid credentials',
+                [],
+                Response::HTTP_UNAUTHORIZED,
+            );
+        }
+
+        $user = Auth::user();
+
+//        $user->assignRole('user');
+
+        if ($request->has('session')) {
+            $cartProducts = CartProduct::where(['session_id' => $request->input('session')])
+                ->andWhereNull('user_id')
+                ->get();
+
+            foreach ($cartProducts as $cartProduct) {
+                $cartProduct->update(['user_id' => $user->id]);
+            }
+        }
+
+        return $this->sendResponse([], 'registered');
     }
 
     public function user(): JsonResponse
@@ -107,5 +116,14 @@ class AuthController extends ResponseController
         Auth::user()->tokens()->delete();
 
         return $this->sendResponse('', 'logout');
+    }
+
+    protected function respondWithToken($token): JsonResponse
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

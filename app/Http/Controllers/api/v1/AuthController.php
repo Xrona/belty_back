@@ -12,7 +12,6 @@ use App\Models\CartProduct;
 use Auth;
 use Hash;
 use Illuminate\Http\JsonResponse;
-use Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends ResponseController

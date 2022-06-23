@@ -71,12 +71,10 @@ class AuthController extends ResponseController
             }
         }
 
-        $request->session()->regenerate();
-
-//        return $this->sendResponse([
-//            'token' => $user->createToken('token')->plainTextToken,
-//            'user' => new UserResource($user),
-//        ], 'login');
+        return $this->sendResponse([
+            'token' => $user->createToken('token')->plainTextToken,
+            'user' => new UserResource($user),
+        ], 'login');
     }
 
     public function user(): JsonResponse

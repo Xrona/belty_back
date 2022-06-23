@@ -52,6 +52,14 @@ class LoginRequest extends FormRequest
                 'email' => __('auth.failed'),
             ]);
         }
+        var_dump(Auth::user());
+        if (Auth::user()->hasRole('user')) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => __('auth.failed'),
+            ]);
+        }
 
 
         RateLimiter::clear($this->throttleKey());

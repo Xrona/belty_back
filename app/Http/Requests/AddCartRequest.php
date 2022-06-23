@@ -39,10 +39,12 @@ class AddCartRequest extends FormRequest
                 'max:1',
             ],
             'color_id' => [
+                'required',
                 'int',
                 Rule::exists((new Color)->getTable(), 'id'),
             ],
             'size_id' => [
+                'required',
                 'int',
                 Rule::exists((new Size)->getTable(), 'id'),
             ],

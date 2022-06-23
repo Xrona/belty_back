@@ -36,13 +36,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (Auth::user()->hasRole('user')) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
+//        if (Auth::user()->hasRole('user')) {
+//            RateLimiter::hit($this->throttleKey());
+//
+//            throw ValidationException::withMessages([
+//                'email' => __('auth.failed'),
+//            ]);
+//        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

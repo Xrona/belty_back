@@ -44,16 +44,14 @@ Route::middleware('api')
 
         Route::post('/register', [AuthController::class, 'register']);
 
+        Route::post('/login', [AuthController::class, 'login']);
 
         Route::get('/session', [AuthController::class, 'getSession']);
 
         Route::post('/order', [OrderController::class, 'order']);
 
-        Route::post('/login', [AuthController::class, 'login']);
-
-        Route::post('/logout', [AuthController::class,'logout']);
-
-        Route::post('/refresh', [AuthController::class, 'refresh']);
-
-        Route::post('/user', [AuthController::class,'user']);
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/user', [AuthController::class, 'user']);
+            Route::get('/logout', [AuthController::class, 'logout']);
+        });
     });

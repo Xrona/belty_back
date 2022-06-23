@@ -41,7 +41,7 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
+    public function authenticate()
     {
         $this->ensureIsNotRateLimited();
 
@@ -52,7 +52,7 @@ class LoginRequest extends FormRequest
                 'email' => __('auth.failed'),
             ]);
         }
-        var_dump(Auth::user()); die;
+
         if (Auth::user()->hasRole('user')) {
             RateLimiter::hit($this->throttleKey());
 

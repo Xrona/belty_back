@@ -22,7 +22,7 @@ class ChangeCartProductRequest extends FormRequest
             'color' => [
                 'int',
                 'nullable',
-                Rule::exist((new Color)->getTable(), 'id'),
+                Rule::exists((new Color)->getTable(), 'id'),
             ],
             'size' => [
                 'int',

@@ -18,8 +18,8 @@ class CartProductResource extends JsonResource
             ),
             [
                 'isGift' => $this->is_gift,
-                'size' => $this->size->name,
-                'color' => $this->color->name,
+                'size' => $this->size->id,
+                'color' => $this->color->id,
                 'name' => $this->product->name,
                 'price' => $this->price(),
                 'colorList' => new ColorCollection($this->product->colors),

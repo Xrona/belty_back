@@ -40,7 +40,7 @@ Route::middleware('api')
 
         Route::get('/remove-cart/{id}', [CartController::class, 'removeCart']);
 
-        Route::post('/change-cart-product/{id}', [CartController::class, 'changeCartProduct']);
+        Route::post('/change-cart-product/{id}', [CartController::class, 'updateProduct']);
 
         Route::post('/register', [AuthController::class, 'register']);
 
